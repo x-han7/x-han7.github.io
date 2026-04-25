@@ -1,15 +1,16 @@
-<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>一只喵的星球~</title><meta name="author" content="横杠一"><meta name="copyright" content="横杠一"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="一只喵的星球~">
 <meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
-<meta property="article:author" content="John Doe">
+<meta property="og:site_name" content="一只喵的星球~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/favicon.png">
+<meta property="article:author" content="横杠一">
+<meta property="article:tag" content="一只喵, 博客, 开发者, 分享">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+<meta name="twitter:image" content="http://example.com/img/favicon.png"><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Hexo",
+  "name": "一只喵的星球~",
   "alternateName": [
     "example.com"
   ],
@@ -60,7 +61,7 @@
         document.head.appendChild(link)
       }),
       addGlobalFn: (key, fn, name = false, parent = window) => {
-        if (!false && key.startsWith('pjax')) return
+        if (!true && key.startsWith('pjax')) return
         const globalFn = parent.globalFn || {}
         globalFn[key] = globalFn[key] || {}
         globalFn[key][name || Object.keys(globalFn[key]).length] = fn
@@ -107,13 +108,13 @@
   </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
-    success: 'Copy Successful',
-    error: 'Copy Failed',
-    noSupport: 'Browser Not Supported'
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
   },
   relativeDate: {
     homepage: false,
@@ -121,18 +122,18 @@
   },
   runtime: '',
   dateSuffix: {
-    just: 'Just now',
-    min: 'minutes ago',
-    hour: 'hours ago',
-    day: 'days ago',
-    month: 'months ago'
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
   },
   copyright: undefined,
   lightbox: 'null',
   Snackbar: undefined,
   infinitegrid: {
     js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
-    buttonText: 'Load More'
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
   islazyloadPlugin: false,
@@ -143,14 +144,143 @@
   },
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Hexo',
+  title: '一只喵的星球~',
   isHighlightShrink: false,
   isToc: false,
   pageType: 'home'
-}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">Hexo</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2026/04/23/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2026-04-23T15:03:46.881Z" title="Created 2026-04-23 23:03:46">2026-04-23</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;  More info: Writing Run server1$ hexo server  More info: Server Generate static files1$ hexo generate  More info: Generating Deploy to remote sites1$ hexo deploy  More info: Deployment </div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">John Doe</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">1</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/23/hello-world/" title="Hello World">Hello World</a><time datetime="2026-04-23T15:03:46.881Z" title="Created 2026-04-23 23:03:46">2026-04-23</time></div></div></div></div><div class="card-widget card-archives">
+}</script><link rel="stylesheet" href="/css/yi.css"><link rel="stylesheet" href="https://cdn2.codesign.qq.com/icons/xnjPoz51lMm6KZL/latest/iconfont.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5167269_oeitjjwgvse.css"><link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div class="page" id="body-wrap"><header class="full_page fixed" id="page-header" style="background-image: url(/img/homeBg.jpg);"><nav id="nav"><div id="nav-group"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">一只喵的星球~</span></a></span><div id="menus"></div><div id="nav-right"><div id="travellings"><a class="site-page" target="_blank" rel="noopener" href="https://travellings.cn/go.html" title="随机前往一个开往项目网站"><i class="iconfont icon-icat-subway"></i></a></div><div id="random"><a class="site-page" href="javascript:toRandomPost()" title="随机前往一个文章"> <i class="iconfont icon-icat-random"></i></a></div><div id="search-button"><a class="site-page social-icon search"><i class="iconfont icon-icon_search_line"></i></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="菜单"><i class="iconfont icon-icat-bars"></i></a></div></div></div></nav><div id="site-info"><h1 id="site-title">一只喵的星球~</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><div id="home-banner"><div class="carousel-section swiper-container"><div class="swiper-wrapper"></div><div class="swiper-pagination"></div><div class="carousel-arrows"><div class="swiper-prev"><i class="fas fa-chevron-left"></i></div><div class="swiper-next"><i class="fas fa-chevron-right"></i></div></div></div><div class="random-articles"><div class="random-articles-container" id="random-articles-container"></div><div class="random-refresh" onclick="articlesRandom()"><div class="random-button"><i class="fas fa-sync-alt"></i><span>换一批</span></div></div></div><script>window.sitePosts = [{"path":"/2026/04/23/hello-world/","title":"Hello World","cover":"https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260424113717639.jpg","date":"2026-04-23"}];</script></div><main class="layout" id="content-inner"><script>function initUnreadTags() {
+  // 未读标记功能
+  const unreadTags = document.querySelectorAll('.article-unread-tag');
+  unreadTags.forEach(tag => {
+    const postId = tag.getAttribute('data-post-id');
+    if (postId && !localStorage.getItem(`read_${postId}`)) {
+      tag.style.display = 'inline-block';
+    }
+  });
+}
+
+function initLazyLoad() {
+  // 图片懒加载
+  const lazyImages = document.querySelectorAll('img[data-lazy-src]');
+  if (lazyImages.length === 0) return;
+  
+  // 先检查是否有已存在的观察器，避免重复创建
+  if (window.imageObserver) {
+    window.imageObserver.disconnect();
+  }
+  
+  window.imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        // 防止重复加载
+        if (img.src === img.dataset.lazySrc) return;
+        img.src = img.dataset.lazySrc;
+        img.classList.add('entered', 'loaded');
+        observer.unobserve(img);
+      }
+    });
+  }, {
+    rootMargin: '100px', // 提前100px开始加载
+    threshold: 0.01
+  });
+  
+  lazyImages.forEach(img => {
+    // 如果图片已经加载过了，跳过
+    if (img.classList.contains('loaded')) return;
+    window.imageObserver.observe(img);
+  });
+}
+
+function recordReadPosts() {
+  // 记录已读文章
+  const postItems = document.querySelectorAll('.recent-post-item');
+  postItems.forEach(item => {
+    // 避免重复绑定事件
+    if (item.hasAttribute('data-listener-bound')) return;
+    item.setAttribute('data-listener-bound', 'true');
+    
+    item.addEventListener('click', function(e) {
+      // 如果点击的是链接内的元素，让链接正常跳转
+      if (e.target.closest('a') && !e.target.closest('.article-unread-tag')) {
+        return;
+      }
+      const unreadTag = this.querySelector('.article-unread-tag');
+      if (unreadTag && unreadTag.style.display !== 'none') {
+        const postId = unreadTag.getAttribute('data-post-id');
+        if (postId) {
+          localStorage.setItem(`read_${postId}`, 'true');
+        }
+      }
+    });
+  });
+}
+
+// 初始化所有功能
+function initIndexFunctions() {
+  initUnreadTags();
+  initLazyLoad();
+  recordReadPosts();
+}
+
+// 页面首次加载时初始化
+document.addEventListener('DOMContentLoaded', initIndexFunctions);
+
+// Pjax 完成后重新初始化（关键！）
+if (typeof pjax !== 'undefined') {
+  document.addEventListener('pjax:complete', function() {
+    initIndexFunctions();
+  });
+}
+
+// 兼容其他可能的 Pjax 事件
+document.addEventListener('pjax:success', function() {
+  initIndexFunctions();
+});</script><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><!-- 判断是否为最新文章（这里以第一篇为最新，你也可以根据日期判断）--><!-- 生成文章的唯一标识（用于未读判断）--><div class="recent-post-item" onclick="pjax.loadUrl('/2026/04/23/hello-world/')" style="cursor: pointer;"><!-- 左侧封面图（当leftOrRight为'left'或为空时显示在左边）--><div class="post_cover left"><a href="/2026/04/23/hello-world/" title="Hello World" onclick="event.stopPropagation()"><img class="post-bg" data-lazy-src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260424113717639.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"></a></div><div class="recent-post-info"><div class="article-meta-top"><div class="article-top-tips"><span class="article-meta-latest">最新文章</span><a class="article-meta-date" href="/categories/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/" onclick="event.stopPropagation()" data-pjax-state=""><i class="iconfont icon-fenlei"></i>测试一下</a><span> / </span><a class="article-meta-date" href="/categories/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/%E5%93%88%E5%93%88%E5%93%88/" onclick="event.stopPropagation()" data-pjax-state="">哈哈哈</a><!-- 未读标识（通过JS动态判断，先占位）--><a class="article-meta-unvisited article-unread-tag" data-post-id="2026_04_23_hello-world_" href="javascript:void(0)" style="display: none;" onclick="event.stopPropagation()">未读</a></div></div><a class="article-title" href="/2026/04/23/hello-world/" title="Hello World" onclick="event.stopPropagation()" data-pjax-state="">Hello World</a><div class="article-meta-wrap"><!-- 日期显示--><span class="post-meta-date"><i class="MeuiCat icon-calendar-todo-fill"></i><span class="article-meta-label">发表于</span><time datetime="2026-04-23T15:03:46.881Z" title="发表于 2026-04-23 23:03:46">2026-04-23</time></span><!-- 标签显示--><span class="article-meta tags"><span class="article-meta-separator">|</span><a class="article-meta__tags" href="/tags/test/" onclick="event.stopPropagation()" data-pjax-state=""><i class="iconfont icon-hashjinghao"></i>test</a></span><!-- 评论数显示--></div><div class="content">开荒的第一篇</div></div><!-- 右侧封面图（当leftOrRight为'right'时显示在右边）--></div><!-- 广告位--></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-social-icons"></div><div class="avatar-bg"><img src="https://p.meuicat.com/media/1736336107677e62ebf25e1.webp!media" data-lazy-src="https://p.meuicat.com/media/1736336107677e62ebf25e1.webp!media" onerror="this.onerror=null;this.src='/img/friend_404.gif'"/><!--.avatar-bg(style=`background-image: url(${url_for(theme.avatar.bgimg)})` class=theme.avatar.effect ? 'avatar-effect' : '')--><div class="recent" id="author-state"><span></span>已经一周没活跃了</div></div><div class="avatar-img"><img src="/img/%E6%A2%B5%E9%AB%98%E6%98%9F%E7%A9%BA.gif" data-lazy-src="/img/%E6%A2%B5%E9%AB%98%E6%98%9F%E7%A9%BA.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="card-author-info"><div class="author-name">横杠一</div><div class="author-desc">地球为什么是圆的？</div></div><div class="is-author"><div class="author-introduce">一只<b>喵</b>的日常：<br/> <b>寻找猫粮</b>——
+指南针s。<br/> <b>不定期营业</b>——
+享受生活ing。<br/>over<br/></div><div class="card-author"><div class="author-info"><span class="author-name">横杠一</span><span class="author-desc">地球为什么是圆的？</span></div><a class="author-link" href="javascript:void(0)" onclick="pjax.loadUrl('/categories/生活随笔/')"><i class="MeuiCat icon-arrow-right-bold"></i></a></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到【一只喵】的星球，在这里分享收集到的猫粮物资~</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/23/hello-world/" title="Hello World"><img src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260424113717639.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/2026/04/23/hello-world/" title="Hello World">Hello World</a><time datetime="2026-04-23T15:03:46.881Z" title="发表于 2026-04-23 23:03:46">2026-04-23</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/"><span class="card-category-list-name">测试一下</span><span class="card-category-list-count">1 篇</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B/%E5%93%88%E5%93%88%E5%93%88/"><span class="card-category-list-name">哈哈哈</span><span class="card-category-list-count">1 篇</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><!-- 标签云容器--><div class="card-tag-cloud"><a href="/tags/test/" style="font-size: 1.11em; color: #1f1e1e; display: inline-block; margin: 4px;" data-pjax-state="">test<sup style="margin-left: 2px; font-size: 0.7em;">1</sup></a></div><!-- 查看全部按钮--><a id="card-tags-more" href="javascript:void(0)" onclick="all_tags()" data-pjax-state="">查看全部</a><!-- JS 脚本：随机颜色和展开所有标签--><script>if (true) {
+  function tags_random(max) {
+    return Math.floor(Math.random() * max)
+  }
+  
+  function tags_color() {
+    const tags = document.querySelectorAll('#aside-content .card-tag-cloud a');
+    const colorIndices = [];
+    
+    // 随机选择5个标签添加彩色样式
+    while (colorIndices.length < 5 && colorIndices.length < tags.length) {
+      const index = tags_random(tags.length);
+      if (!colorIndices.includes(index)) {
+        colorIndices.push(index);
+        tags[index].classList.add('color');
+      }
+    }
+  }
+  
+  function all_tags() {
+    const tagCloud = document.querySelector('#aside-content .card-tag-cloud');
+    if (tagCloud) {
+      tagCloud.classList.add('all-tags');
+    }
+    const moreBtn = document.getElementById('card-tags-more');
+    if (moreBtn) {
+      moreBtn.remove();
+    }
+  }
+  
+  // 执行随机颜色
+  tags_color();
+}</script></div><div class="card-widget card-archives">
     <div class="item-headline">
       <i class="fas fa-archive"></i>
-      <span>Archives</span>
+      <span>归档</span>
       
     </div>
   
@@ -159,11 +289,111 @@
         <li class="card-archive-list-item">
           <a class="card-archive-list-link" href="/archives/2026/04/">
             <span class="card-archive-list-date">
-              April 2026
+              四月 2026
             </span>
-            <span class="card-archive-list-count">1</span>
+            <span class="card-archive-list-count">1 篇</span>
           </a>
         </li>
       
     </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">1</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-04-23T15:45:13.313Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By John Doe</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 横杠一</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js@3.0.0/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = ["HELLO, 我是横杠一,一个正在___的横杠","欢迎来到 【一只喵】 的星球","祝我们都能与愉快扑个满怀~"].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  typedJSFn.processSubtitle(["HELLO, 我是横杠一,一个正在___的横杠","欢迎来到 【一只喵】 的星球","祝我们都能与愉快扑个满怀~"])
+}
+typedJSFn.run(subtitleType)</script></div><script src="/js/meuicat.js"></script><script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script><script src="/js/hometop.js"></script><script src="/icat/random.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      false
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="请输入..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
