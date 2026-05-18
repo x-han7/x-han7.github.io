@@ -1,0 +1,85 @@
+/* Added by AI: 相册集瀑布流页面样式，全部收束在 xu-photo-page 内，避免误伤首页卡片 */
+.type-photos #page,
+.type-photos .layout > div:first-child:not(.nc) {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.xu-photo-page .photo-waterfall {
+  column-count: 3;
+  column-gap: 18px;
+  width: 100%;
+}
+
+.xu-photo-page .photo-card {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 18px;
+  overflow: hidden;
+  border: var(--icat-border-always);
+  border-radius: 8px;
+  background: var(--icat-card-bg);
+  box-shadow: var(--icat-shadow-border);
+  break-inside: avoid;
+}
+
+.xu-photo-page .photo-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 180px;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.xu-photo-page .photo-card-large img {
+  min-height: 360px;
+}
+
+.xu-photo-page .photo-card-tall img {
+  min-height: 430px;
+}
+
+.xu-photo-page .photo-card figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0));
+  line-height: 1.35;
+}
+
+.xu-photo-page .photo-card figcaption span {
+  font-weight: 700;
+}
+
+.xu-photo-page .photo-card figcaption small {
+  opacity: 0.78;
+}
+
+.xu-photo-page .photo-card:hover {
+  border-color: var(--icat-theme);
+  box-shadow: var(--icat-shadow-main);
+}
+
+.xu-photo-page .photo-card:hover img {
+  transform: scale(1.04);
+}
+
+@media screen and (max-width: 1024px) {
+  .xu-photo-page .photo-waterfall {
+    column-count: 2;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .xu-photo-page .photo-waterfall {
+    column-count: 1;
+  }
+}
