@@ -1,1 +1,1 @@
-var posts=["2026/05/01/日记/随便聊聊/","2026/04/26/杂记/大纲/","2026/04/25/知识/生物世界/","2026/05/18/数据库/11/","2026/05/18/数据库/数据库与缓存技术/"];function toRandomPost(){pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);};
+var posts=["2026/05/01/日记/随便聊聊/","2026/04/26/杂记/大纲/","2026/04/25/知识/生物世界/","2026/05/18/数据库/数据库与缓存技术/"];function toRandomPost(){pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);};
