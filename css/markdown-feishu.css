@@ -1,0 +1,439 @@
+/* Added by AI: 飞书风格正文样式，适合协作记录、方案文档、项目复盘，front-matter: markdown_style: feishu */
+#post.md-style-feishu #article-container {
+  --md-main: #3370ff;
+  --md-main-strong: #245bdb;
+  --md-soft: rgba(51, 112, 255, 0.09);
+  --md-soft-strong: rgba(51, 112, 255, 0.15);
+  --md-border: #dee5f2;
+  --md-surface: var(--icat-card-bg);
+  --md-surface-2: #f7f9fc;
+  --md-surface-3: #f2f5fb;
+  --md-text: var(--icat-fontcolor);
+  --md-muted: #646a73;
+  --md-code-bg: #f6f8fb;
+  --md-table-head: #f2f5fb;
+  --md-shadow: 0 8px 24px rgba(31, 35, 41, 0.06);
+  color: var(--md-text);
+  font-size: 16px;
+  line-height: 1.82;
+  letter-spacing: 0;
+}
+
+[data-theme="dark"] #post.md-style-feishu #article-container {
+  --md-main: #82a7fc;
+  --md-main-strong: #a8c1ff;
+  --md-soft: rgba(130, 167, 252, 0.12);
+  --md-soft-strong: rgba(130, 167, 252, 0.2);
+  --md-border: #303846;
+  --md-surface: #1c212b;
+  --md-surface-2: #181d26;
+  --md-surface-3: #202735;
+  --md-text: #e6eaf2;
+  --md-muted: #a8b0bf;
+  --md-code-bg: #171d27;
+  --md-table-head: #222a38;
+  --md-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+}
+
+#post.md-style-feishu #article-container > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-feishu #article-container > :last-child {
+  margin-bottom: 0;
+}
+
+#post.md-style-feishu #article-container :is(p, ul, ol, blockquote, table, pre, figure.highlight, .note, .tabs, details) {
+  margin: 0.85rem 0;
+}
+
+#post.md-style-feishu #article-container p {
+  color: var(--md-text);
+  letter-spacing: 0;
+}
+
+#post.md-style-feishu #article-container.post-content :is(h1, h2, h3, h4, h5, h6) {
+  display: block;
+  flex-direction: initial;
+  justify-content: initial;
+  color: var(--md-text);
+  letter-spacing: 0;
+}
+
+#post.md-style-feishu #article-container h1 {
+  margin: 0.8rem 0 1.2rem;
+  font-size: 1.86rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+#post.md-style-feishu #article-container h2 {
+  margin: 1.8rem 0 0.78rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--md-border);
+  font-size: 1.35rem;
+  font-weight: 750;
+}
+
+#post.md-style-feishu #article-container h2::before {
+  display: inline-block;
+  width: 0.34rem;
+  height: 1.15rem;
+  margin-right: 0.56rem;
+  border-radius: 999px;
+  background: var(--md-main);
+  content: "";
+  vertical-align: -0.15rem;
+}
+
+#post.md-style-feishu #article-container h3 {
+  margin: 1.35rem 0 0.56rem;
+  font-size: 1.12rem;
+  font-weight: 750;
+}
+
+#post.md-style-feishu #article-container h3::before {
+  display: inline-block;
+  width: 0.48rem;
+  height: 0.48rem;
+  margin-right: 0.52rem;
+  border-radius: 999px;
+  background: var(--md-main);
+  content: "";
+  vertical-align: 0.12rem;
+}
+
+#post.md-style-feishu #article-container :is(h4, h5, h6) {
+  margin: 1rem 0 0.45rem;
+  color: var(--md-muted);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+#post.md-style-feishu #article-container a:not([data-fancybox]) {
+  color: var(--md-main-strong);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(51, 112, 255, 0.35);
+}
+
+#post.md-style-feishu #article-container a:not([data-fancybox]):hover {
+  border-bottom-color: var(--md-main);
+  background: var(--md-soft);
+  color: var(--md-main-strong);
+}
+
+#post.md-style-feishu #article-container strong {
+  color: var(--md-text);
+  font-weight: 760;
+}
+
+#post.md-style-feishu #article-container mark {
+  padding: 0 0.18em;
+  border-radius: 3px;
+  background: rgba(255, 219, 77, 0.34);
+  color: var(--md-text);
+}
+
+#post.md-style-feishu #article-container hr {
+  margin: 1.55rem 0;
+  height: 1px;
+  border: 0;
+  background: var(--md-border);
+}
+
+#post.md-style-feishu #article-container img {
+  display: block;
+  margin: 1rem auto;
+  border: 1px solid var(--md-border);
+  border-radius: 10px;
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-feishu #article-container :is(ul, ol) {
+  padding-left: 1.4rem;
+}
+
+#post.md-style-feishu #article-container li {
+  margin: 0.22rem 0;
+  padding-left: 0.12rem;
+}
+
+#post.md-style-feishu #article-container li::before {
+  display: none;
+  content: none;
+}
+
+#post.md-style-feishu #article-container ul > li::marker {
+  color: var(--md-main);
+}
+
+#post.md-style-feishu #article-container ol > li::marker {
+  color: var(--md-muted);
+  font-weight: 700;
+}
+
+#post.md-style-feishu #article-container li:has(input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -1.2rem;
+}
+
+#post.md-style-feishu #article-container input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  border: 1px solid var(--md-border);
+  border-radius: 4px;
+  vertical-align: -0.15rem;
+  accent-color: var(--md-main);
+}
+
+#post.md-style-feishu #article-container code:not(pre code) {
+  padding: 0.16rem 0.42rem;
+  border: 1px solid #d8e1f2;
+  border-radius: 5px;
+  background: var(--md-code-bg);
+  color: #c0265a;
+  font-size: 0.9em;
+}
+
+[data-theme="dark"] #post.md-style-feishu #article-container code:not(pre code) {
+  border-color: #334054;
+  color: #ff9bb8;
+}
+
+#post.md-style-feishu #article-container kbd {
+  border: 1px solid var(--md-border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--md-surface-2);
+  color: var(--md-text);
+  box-shadow: none;
+}
+
+#post.md-style-feishu #article-container blockquote,
+#post.md-style-feishu #article-container .note {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--md-border);
+  border-left: 4px solid transparent;
+  border-radius: 10px;
+  background: var(--md-surface-2);
+  color: var(--md-text);
+  box-shadow: none;
+}
+
+#post.md-style-feishu #article-container blockquote {
+  border-left-color: var(--md-main);
+}
+
+#post.md-style-feishu #article-container blockquote p {
+  margin: 0.45rem 0;
+}
+
+#post.md-style-feishu #article-container .note {
+  background: var(--md-surface-3);
+}
+
+#post.md-style-feishu #article-container .note.flat,
+#post.md-style-feishu #article-container .note.simple,
+#post.md-style-feishu #article-container .note.modern {
+  border: 1px solid var(--md-border) !important;
+  border-left: 4px solid var(--md-main) !important;
+  background: var(--md-surface-3);
+  color: var(--md-text);
+}
+
+#post.md-style-feishu #article-container .note > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-feishu #article-container .note > :last-child {
+  margin-bottom: 0;
+}
+
+#post.md-style-feishu #article-container table {
+  width: 100%;
+  border: 1px solid var(--md-border);
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--md-surface);
+}
+
+#post.md-style-feishu #article-container th,
+#post.md-style-feishu #article-container td {
+  padding: 0.72rem 0.85rem;
+  border: 1px solid var(--md-border);
+}
+
+#post.md-style-feishu #article-container th {
+  background: var(--md-table-head);
+  color: var(--md-text);
+  font-weight: 750;
+}
+
+#post.md-style-feishu #article-container td {
+  background: var(--md-surface);
+}
+
+#post.md-style-feishu #article-container tbody tr:hover td {
+  background: var(--md-surface-2);
+}
+
+#post.md-style-feishu #article-container :is(pre, figure.highlight) {
+  margin: 1rem 0;
+  border: 1px solid var(--md-border);
+  border-radius: 10px;
+  background: var(--md-code-bg);
+  box-shadow: none;
+}
+
+#post.md-style-feishu #article-container pre {
+  padding: 1rem;
+}
+
+#post.md-style-feishu #article-container pre code {
+  background: transparent;
+}
+
+#post.md-style-feishu #article-container figure.highlight {
+  overflow: hidden;
+}
+
+#post.md-style-feishu #article-container figure.highlight .highlight-tools {
+  min-height: 2.25rem;
+  padding: 0 0.85rem;
+  border-bottom: 1px solid var(--md-border);
+  background: var(--md-surface-3);
+  color: var(--md-muted);
+}
+
+#post.md-style-feishu #article-container figure.highlight .highlight-tools .code-lang {
+  color: var(--md-muted);
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.03em;
+}
+
+#post.md-style-feishu #article-container figure.highlight .highlight-tools i:hover {
+  color: var(--md-main);
+}
+
+#post.md-style-feishu #article-container .code-expand-btn {
+  border-top: 1px solid var(--md-border);
+  background: var(--md-surface-3);
+  color: var(--md-muted);
+}
+
+#post.md-style-feishu #article-container .code-expand-btn:hover {
+  color: var(--md-main);
+}
+
+#post.md-style-feishu #article-container .code-expand-btn.expand-done {
+  background: var(--md-surface-2);
+}
+
+#post.md-style-feishu #article-container .code-expand-btn.expand-done + table,
+#post.md-style-feishu #article-container .code-expand-btn.expand-done + pre {
+  margin-bottom: calc(1.8em - 2px);
+}
+
+#post.md-style-feishu #article-container .tabs {
+  margin: 1rem 0;
+  border: 1px solid var(--md-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--md-surface);
+  box-shadow: none;
+}
+
+#post.md-style-feishu #article-container .tabs > .nav-tabs {
+  display: flex;
+  background: var(--md-surface-2);
+}
+
+#post.md-style-feishu #article-container .tabs > .nav-tabs > .tab {
+  flex-grow: 0;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--md-muted);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+#post.md-style-feishu #article-container .tabs > .nav-tabs > .tab.active {
+  border-bottom-color: var(--md-main);
+  background: var(--md-surface);
+  color: var(--md-main-strong);
+}
+
+#post.md-style-feishu #article-container .tabs > .nav-tabs > .tab:not(.active):hover {
+  background: var(--md-surface-3);
+  color: var(--md-main);
+}
+
+#post.md-style-feishu #article-container .tabs > .tab-contents .tab-item-content {
+  padding: 1rem 1.05rem 0.9rem;
+}
+
+#post.md-style-feishu #article-container details {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--md-border);
+  border-radius: 10px;
+  background: var(--md-surface-2);
+}
+
+#post.md-style-feishu #article-container details summary {
+  cursor: pointer;
+  color: var(--md-text);
+  font-weight: 750;
+}
+
+#post.md-style-feishu #article-container details > :not(summary) {
+  margin-top: 0.7rem;
+}
+
+@media screen and (max-width: 768px) {
+  #post.md-style-feishu #article-container {
+    font-size: 15px;
+    line-height: 1.76;
+  }
+
+  #post.md-style-feishu #article-container h1 {
+    font-size: 1.55rem;
+  }
+
+  #post.md-style-feishu #article-container h2 {
+    font-size: 1.18rem;
+  }
+
+  #post.md-style-feishu #article-container h3 {
+    font-size: 1.04rem;
+  }
+
+  #post.md-style-feishu #article-container :is(table, figure.highlight, pre, .tabs, blockquote, .note) {
+    border-radius: 8px;
+  }
+
+  #post.md-style-feishu #article-container th,
+  #post.md-style-feishu #article-container td {
+    padding: 0.62rem 0.7rem;
+  }
+
+  #post.md-style-feishu #article-container .tabs > .nav-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  #post.md-style-feishu #article-container .tabs > .nav-tabs > .tab {
+    flex: 0 0 auto;
+    padding: 0.68rem 0.82rem;
+    white-space: nowrap;
+  }
+
+  #post.md-style-feishu #article-container .tabs > .tab-contents .tab-item-content {
+    padding: 0.88rem 0.85rem 0.78rem;
+  }
+}

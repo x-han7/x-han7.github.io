@@ -1,0 +1,476 @@
+/* Added by AI: 语雀风格正文样式，适合知识型、文档型文章，front-matter: markdown_style: yuque */
+#post.md-style-yuque #article-container {
+  --md-main: #2f6fed;
+  --md-main-strong: #1f5fe0;
+  --md-soft: rgba(47, 111, 237, 0.1);
+  --md-soft-strong: rgba(47, 111, 237, 0.16);
+  --md-border: var(--icat-card-border);
+  --md-surface: var(--icat-card-bg);
+  --md-surface-2: #f8fbff;
+  --md-quote-bg: #f6f9ff;
+  --md-code-bg: #f8fbff;
+  --md-table-head: #edf4ff;
+  --md-muted: var(--icat-secondtext);
+  --md-text: var(--icat-fontcolor);
+  --md-radius: 14px;
+  --md-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  color: var(--md-text);
+  font-size: 16px;
+  line-height: 1.95;
+  letter-spacing: 0;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container {
+  --md-main: #7fb0ff;
+  --md-main-strong: #a6c8ff;
+  --md-soft: rgba(127, 176, 255, 0.12);
+  --md-soft-strong: rgba(127, 176, 255, 0.18);
+  --md-border: #2a3550;
+  --md-surface: #1b2230;
+  --md-surface-2: #151c28;
+  --md-quote-bg: #1a2434;
+  --md-code-bg: #151c28;
+  --md-table-head: #1e2a3d;
+  --md-muted: #a4b0c2;
+  --md-text: #e7edf8;
+  --md-shadow: 0 18px 42px rgba(0, 0, 0, 0.25);
+}
+
+#post.md-style-yuque #article-container > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-yuque #article-container > :last-child {
+  margin-bottom: 0;
+}
+
+#post.md-style-yuque #article-container :is(p, ul, ol, blockquote, table, pre, figure.highlight, .note, .tabs, details) {
+  margin: 1rem 0;
+}
+
+#post.md-style-yuque #article-container p {
+  color: var(--md-text);
+  letter-spacing: 0;
+}
+
+#post.md-style-yuque #article-container.post-content :is(h1, h2, h3, h4, h5, h6) {
+  display: block;
+  flex-direction: initial;
+  justify-content: initial;
+}
+
+#post.md-style-yuque #article-container strong {
+  color: var(--md-main-strong);
+}
+
+#post.md-style-yuque #article-container em {
+  color: var(--md-main-strong);
+}
+
+#post.md-style-yuque #article-container a:not([data-fancybox]) {
+  color: var(--md-main-strong);
+  text-decoration: underline;
+  text-decoration-color: rgba(47, 111, 237, 0.35);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+}
+
+#post.md-style-yuque #article-container a:not([data-fancybox]):hover {
+  color: var(--md-main);
+}
+
+#post.md-style-yuque #article-container img {
+  display: block;
+  margin: 1rem auto;
+  border-radius: 14px;
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-yuque #article-container :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--md-text);
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+#post.md-style-yuque #article-container h1 {
+  margin: 1rem 0 1.2rem;
+  font-size: 1.85rem;
+  font-weight: 800;
+}
+
+#post.md-style-yuque #article-container h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0 0.9rem;
+  padding: 0.75rem 0 0.75rem 1rem;
+  border-left: 5px solid var(--md-main);
+  border-bottom: 1px solid var(--md-border);
+  border-radius: 0 14px 14px 0;
+  background: linear-gradient(90deg, var(--md-soft), transparent 72%);
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+#post.md-style-yuque #article-container h2::before {
+  display: inline-block;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--md-main) 0 38%, transparent 40%);
+  content: "";
+  flex: 0 0 auto;
+}
+
+#post.md-style-yuque #article-container h3 {
+  margin: 1.55rem 0 0.65rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--md-main);
+  font-size: 1.16rem;
+  font-weight: 750;
+}
+
+#post.md-style-yuque #article-container h4 {
+  margin: 1.2rem 0 0.55rem;
+  font-size: 1.03rem;
+  font-weight: 700;
+  color: var(--md-main-strong);
+}
+
+#post.md-style-yuque #article-container :is(h5, h6) {
+  margin: 1rem 0 0.45rem;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--md-muted);
+}
+
+#post.md-style-yuque #article-container hr {
+  margin: 1.8rem 0;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--md-soft-strong), transparent);
+}
+
+#post.md-style-yuque #article-container :is(ul, ol) {
+  padding-left: 1.45rem;
+}
+
+#post.md-style-yuque #article-container li {
+  margin: 0.35rem 0;
+  padding-left: 0.15rem;
+}
+
+#post.md-style-yuque #article-container li::before {
+  display: none;
+  content: none;
+}
+
+#post.md-style-yuque #article-container ul > li::marker {
+  color: var(--md-main);
+}
+
+#post.md-style-yuque #article-container ol > li::marker {
+  color: var(--md-main-strong);
+  font-weight: 800;
+}
+
+#post.md-style-yuque #article-container code:not(pre code) {
+  padding: 0.18rem 0.45rem;
+  border: 1px solid rgba(47, 111, 237, 0.18);
+  border-radius: 6px;
+  background: var(--md-soft);
+  color: var(--md-main-strong);
+  font-size: 0.92em;
+}
+
+#post.md-style-yuque #article-container kbd {
+  border: 1px solid var(--md-border);
+  background: var(--md-surface-2);
+  color: var(--md-text);
+  box-shadow: none;
+}
+
+#post.md-style-yuque #article-container mark {
+  padding: 0 0.2em;
+  border-radius: 4px;
+  background: rgba(245, 208, 62, 0.24);
+  color: var(--md-text);
+}
+
+#post.md-style-yuque #article-container :is(blockquote, .note) {
+  position: relative;
+  margin: 1.15rem 0;
+  padding: 1rem 1.1rem 1rem 1.15rem;
+  border: 1px solid var(--md-border);
+  border-left: 5px solid var(--md-main);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--md-quote-bg), var(--md-surface));
+  color: var(--md-text);
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-yuque #article-container blockquote::before {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  border-top: 3px solid var(--md-main);
+  border-left: 3px solid var(--md-main);
+  border-radius: 4px 0 0 0;
+  content: "";
+  opacity: 0.26;
+}
+
+#post.md-style-yuque #article-container blockquote p {
+  margin: 0.55rem 0;
+}
+
+#post.md-style-yuque #article-container .note {
+  border-left-width: 4px;
+  background: linear-gradient(180deg, var(--md-quote-bg), var(--md-surface-2));
+}
+
+#post.md-style-yuque #article-container .note.simple {
+  background: var(--md-quote-bg);
+}
+
+#post.md-style-yuque #article-container .note.modern {
+  background: linear-gradient(180deg, var(--md-quote-bg), var(--md-surface));
+}
+
+#post.md-style-yuque #article-container .note.flat {
+  background: var(--md-surface-2);
+}
+
+#post.md-style-yuque #article-container .note > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-yuque #article-container .note > :last-child {
+  margin-bottom: 0;
+}
+
+#post.md-style-yuque #article-container table {
+  width: 100%;
+  border: 1px solid var(--md-border);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--md-surface);
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-yuque #article-container th,
+#post.md-style-yuque #article-container td {
+  padding: 0.82rem 1rem;
+  border-right: 1px solid var(--md-border);
+  border-bottom: 1px solid var(--md-border);
+}
+
+#post.md-style-yuque #article-container th {
+  background: var(--md-table-head);
+  color: var(--md-text);
+  font-weight: 800;
+}
+
+#post.md-style-yuque #article-container td {
+  background: var(--md-surface);
+}
+
+#post.md-style-yuque #article-container tr:last-child td {
+  border-bottom: 0;
+}
+
+#post.md-style-yuque #article-container tr td:last-child,
+#post.md-style-yuque #article-container tr th:last-child {
+  border-right: 0;
+}
+
+#post.md-style-yuque #article-container tbody tr:hover td {
+  background: #f4f8ff;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container tbody tr:hover td {
+  background: #202b41;
+}
+
+#post.md-style-yuque #article-container :is(pre, figure.highlight) {
+  margin: 1.15rem 0;
+  border: 1px solid var(--md-border);
+  border-radius: 16px;
+  background: var(--md-code-bg);
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-yuque #article-container figure.highlight {
+  overflow: hidden;
+}
+
+#post.md-style-yuque #article-container pre {
+  padding: 1rem 1.1rem;
+}
+
+#post.md-style-yuque #article-container pre code {
+  background: transparent;
+  color: var(--icat-fontcolor);
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools {
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--md-border);
+  background: linear-gradient(90deg, var(--md-soft), transparent);
+  color: var(--md-text);
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools .code-lang {
+  color: var(--md-main-strong);
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools i:hover {
+  color: var(--md-main);
+}
+
+#post.md-style-yuque #article-container .code-expand-btn {
+  border-top: 1px solid var(--md-border);
+  background: linear-gradient(180deg, rgba(248, 251, 255, 0.15), var(--md-code-bg));
+  color: var(--md-muted);
+}
+
+#post.md-style-yuque #article-container .code-expand-btn:hover {
+  color: var(--md-main);
+}
+
+#post.md-style-yuque #article-container .code-expand-btn.expand-done {
+  background: var(--md-surface-2);
+}
+
+#post.md-style-yuque #article-container .code-expand-btn.expand-done + table,
+#post.md-style-yuque #article-container .code-expand-btn.expand-done + pre {
+  margin-bottom: calc(1.8em - 2px);
+}
+
+#post.md-style-yuque #article-container .tabs {
+  margin: 1.2rem 0;
+  border: 1px solid var(--md-border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--md-surface);
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-yuque #article-container .tabs > .nav-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.55rem 0.55rem 0;
+  background: linear-gradient(180deg, var(--md-quote-bg), var(--md-surface));
+}
+
+#post.md-style-yuque #article-container .tabs > .nav-tabs > .tab {
+  flex-grow: 1;
+  padding: 0.72rem 1rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 12px 12px 0 0;
+  background: transparent;
+  color: var(--md-muted);
+  font-weight: 700;
+  line-height: 1.5;
+  transition: all 0.25s ease;
+}
+
+#post.md-style-yuque #article-container .tabs > .nav-tabs > .tab.active {
+  border-bottom-color: var(--md-main);
+  background: var(--md-surface);
+  color: var(--md-main-strong);
+  box-shadow: 0 -1px 0 var(--md-border), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+#post.md-style-yuque #article-container .tabs > .nav-tabs > .tab:not(.active):hover {
+  background: rgba(47, 111, 237, 0.05);
+  color: var(--md-main);
+}
+
+#post.md-style-yuque #article-container .tabs > .tab-contents {
+  background: var(--md-surface);
+}
+
+#post.md-style-yuque #article-container .tabs > .tab-contents .tab-item-content {
+  padding: 1.15rem 1.15rem 1rem;
+}
+
+#post.md-style-yuque #article-container details {
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--md-border);
+  border-radius: 14px;
+  background: var(--md-surface-2);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+}
+
+#post.md-style-yuque #article-container details summary {
+  cursor: pointer;
+  color: var(--md-main-strong);
+  font-weight: 700;
+}
+
+#post.md-style-yuque #article-container details > :not(summary) {
+  margin-top: 0.75rem;
+}
+
+@media screen and (max-width: 768px) {
+  #post.md-style-yuque #article-container {
+    font-size: 15px;
+    line-height: 1.88;
+  }
+
+  #post.md-style-yuque #article-container h1 {
+    font-size: 1.55rem;
+  }
+
+  #post.md-style-yuque #article-container h2 {
+    padding-left: 0.85rem;
+    font-size: 1.2rem;
+  }
+
+  #post.md-style-yuque #article-container h3 {
+    font-size: 1.04rem;
+  }
+
+  #post.md-style-yuque #article-container :is(table, figure.highlight, pre, .tabs, blockquote, .note) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  #post.md-style-yuque #article-container table,
+  #post.md-style-yuque #article-container figure.highlight,
+  #post.md-style-yuque #article-container pre,
+  #post.md-style-yuque #article-container .tabs,
+  #post.md-style-yuque #article-container blockquote,
+  #post.md-style-yuque #article-container .note {
+    border-radius: 12px;
+  }
+
+  #post.md-style-yuque #article-container th,
+  #post.md-style-yuque #article-container td {
+    padding: 0.72rem 0.78rem;
+  }
+
+  #post.md-style-yuque #article-container .tabs > .nav-tabs {
+    gap: 0.35rem;
+    padding: 0.45rem 0.45rem 0;
+  }
+
+  #post.md-style-yuque #article-container .tabs > .nav-tabs > .tab {
+    padding: 0.62rem 0.72rem;
+    font-size: 0.92rem;
+  }
+
+  #post.md-style-yuque #article-container .tabs > .tab-contents .tab-item-content {
+    padding: 0.95rem 0.9rem 0.85rem;
+  }
+}

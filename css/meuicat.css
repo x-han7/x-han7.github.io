@@ -426,12 +426,14 @@ blockquote {
 /* 代码块圆角调整 */
 
 [data-theme="light"] #aside-content > .card-widget.card-info {
+  /* TODO: 添加背景图 */
   background-image: url(https://s11.ax1x.com/2023/05/02/p9GWEin.jpg);
   background-repeat: no-repeat;
   background-attachment: inherit;
   background-size: 100%;
 }
 [data-theme="dark"] #aside-content > .card-widget.card-info {
+    /* TODO: 添加背景图 */
   background-image: url(https://s11.ax1x.com/2023/05/02/p9GWVGq.jpg);
   background-repeat: no-repeat;
   background-attachment: inherit;

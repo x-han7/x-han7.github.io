@@ -1,0 +1,426 @@
+/* Added by AI: 掘金风格正文样式，适合技术教程、源码分析、工程经验，front-matter: markdown_style: juejin */
+#post.md-style-juejin #article-container {
+  --md-main: #1e80ff;
+  --md-main-strong: #006cff;
+  --md-soft: rgba(30, 128, 255, 0.09);
+  --md-soft-strong: rgba(30, 128, 255, 0.16);
+  --md-border: #e4e7ed;
+  --md-surface: var(--icat-card-bg);
+  --md-surface-2: #f7f8fa;
+  --md-text: #252933;
+  --md-muted: #6b7280;
+  --md-code-bg: #f6f8fa;
+  --md-code-dark: #1f2937;
+  --md-table-head: #f2f3f5;
+  --md-shadow: 0 14px 34px rgba(31, 41, 55, 0.08);
+  color: var(--md-text);
+  font-size: 16px;
+  line-height: 1.86;
+  letter-spacing: 0;
+}
+
+[data-theme="dark"] #post.md-style-juejin #article-container {
+  --md-main: #5aa9ff;
+  --md-main-strong: #8fc4ff;
+  --md-soft: rgba(90, 169, 255, 0.13);
+  --md-soft-strong: rgba(90, 169, 255, 0.22);
+  --md-border: #303846;
+  --md-surface: #1b202b;
+  --md-surface-2: #171c25;
+  --md-text: #e8edf5;
+  --md-muted: #9aa4b2;
+  --md-code-bg: #151b24;
+  --md-code-dark: #111827;
+  --md-table-head: #222a36;
+  --md-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+}
+
+#post.md-style-juejin #article-container > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-juejin #article-container > :last-child {
+  margin-bottom: 0;
+}
+
+#post.md-style-juejin #article-container :is(p, ul, ol, blockquote, table, pre, figure.highlight, .note, .tabs, details) {
+  margin: 1rem 0;
+}
+
+#post.md-style-juejin #article-container p {
+  color: var(--md-text);
+  letter-spacing: 0;
+}
+
+#post.md-style-juejin #article-container.post-content :is(h1, h2, h3, h4, h5, h6) {
+  display: block;
+  flex-direction: initial;
+  justify-content: initial;
+  color: var(--md-text);
+  letter-spacing: 0;
+}
+
+#post.md-style-juejin #article-container h1 {
+  margin: 0.8rem 0 1.25rem;
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.32;
+}
+
+#post.md-style-juejin #article-container h2 {
+  position: relative;
+  margin: 2.2rem 0 1rem;
+  padding: 0 0 0.64rem;
+  border-bottom: 1px solid var(--md-border);
+  font-size: 1.42rem;
+  font-weight: 800;
+}
+
+#post.md-style-juejin #article-container h2::after {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 4rem;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--md-main);
+  content: "";
+}
+
+#post.md-style-juejin #article-container h3 {
+  margin: 1.55rem 0 0.68rem;
+  padding-left: 0.75rem;
+  border-left: 4px solid var(--md-main);
+  font-size: 1.17rem;
+  font-weight: 780;
+}
+
+#post.md-style-juejin #article-container h4 {
+  margin: 1.15rem 0 0.52rem;
+  font-size: 1.04rem;
+  font-weight: 760;
+}
+
+#post.md-style-juejin #article-container :is(h5, h6) {
+  margin: 0.95rem 0 0.45rem;
+  color: var(--md-muted);
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+#post.md-style-juejin #article-container a:not([data-fancybox]) {
+  color: var(--md-main-strong);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(30, 128, 255, 0.35);
+}
+
+#post.md-style-juejin #article-container a:not([data-fancybox]):hover {
+  border-bottom-color: var(--md-main);
+  background: var(--md-soft);
+  color: var(--md-main-strong);
+}
+
+#post.md-style-juejin #article-container strong {
+  color: var(--md-text);
+  font-weight: 800;
+}
+
+#post.md-style-juejin #article-container mark {
+  padding: 0 0.18em;
+  border-radius: 3px;
+  background: rgba(255, 225, 89, 0.35);
+  color: var(--md-text);
+}
+
+#post.md-style-juejin #article-container hr {
+  margin: 1.8rem 0;
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, var(--md-border), transparent);
+}
+
+#post.md-style-juejin #article-container img {
+  display: block;
+  margin: 1rem auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 26px rgba(31, 41, 55, 0.08);
+}
+
+#post.md-style-juejin #article-container :is(ul, ol) {
+  padding-left: 1.45rem;
+}
+
+#post.md-style-juejin #article-container li {
+  margin: 0.3rem 0;
+  padding-left: 0.16rem;
+}
+
+#post.md-style-juejin #article-container li::before {
+  display: none;
+  content: none;
+}
+
+#post.md-style-juejin #article-container ul > li::marker {
+  color: var(--md-main);
+}
+
+#post.md-style-juejin #article-container ol > li::marker {
+  color: var(--md-main);
+  font-weight: 800;
+}
+
+#post.md-style-juejin #article-container code:not(pre code) {
+  padding: 0.16rem 0.42rem;
+  border: 1px solid rgba(30, 128, 255, 0.16);
+  border-radius: 5px;
+  background: var(--md-soft);
+  color: #d6336c;
+  font-size: 0.9em;
+}
+
+[data-theme="dark"] #post.md-style-juejin #article-container code:not(pre code) {
+  color: #ff9ab7;
+}
+
+#post.md-style-juejin #article-container kbd {
+  border: 1px solid var(--md-border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--md-surface-2);
+  color: var(--md-text);
+  box-shadow: none;
+}
+
+#post.md-style-juejin #article-container blockquote {
+  position: relative;
+  margin: 1rem 0;
+  padding: 0.92rem 1rem 0.92rem 1.05rem;
+  border: 1px solid var(--md-border);
+  border-left: 4px solid var(--md-main);
+  border-radius: 8px;
+  background: var(--md-surface-2);
+  color: var(--md-muted);
+}
+
+#post.md-style-juejin #article-container blockquote p {
+  margin: 0.45rem 0;
+}
+
+#post.md-style-juejin #article-container .note {
+  margin: 1rem 0;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--md-border) !important;
+  border-left: 4px solid var(--md-main) !important;
+  border-radius: 8px;
+  background: var(--md-surface-2);
+  color: var(--md-text);
+}
+
+#post.md-style-juejin #article-container .note.flat,
+#post.md-style-juejin #article-container .note.simple,
+#post.md-style-juejin #article-container .note.modern {
+  background: var(--md-surface-2);
+  color: var(--md-text);
+}
+
+#post.md-style-juejin #article-container .note > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-juejin #article-container .note > :last-child {
+  margin-bottom: 0;
+}
+
+#post.md-style-juejin #article-container table {
+  width: 100%;
+  border: 1px solid var(--md-border);
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--md-surface);
+}
+
+#post.md-style-juejin #article-container th,
+#post.md-style-juejin #article-container td {
+  padding: 0.78rem 0.88rem;
+  border: 1px solid var(--md-border);
+}
+
+#post.md-style-juejin #article-container th {
+  background: var(--md-table-head);
+  color: var(--md-text);
+  font-weight: 800;
+}
+
+#post.md-style-juejin #article-container td {
+  background: var(--md-surface);
+}
+
+#post.md-style-juejin #article-container tbody tr:nth-child(even) td {
+  background: var(--md-surface-2);
+}
+
+#post.md-style-juejin #article-container tbody tr:hover td {
+  background: var(--md-soft);
+}
+
+#post.md-style-juejin #article-container :is(pre, figure.highlight) {
+  margin: 1.1rem 0;
+  border: 1px solid var(--md-border);
+  border-radius: 10px;
+  background: var(--md-code-bg);
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-juejin #article-container pre {
+  padding: 1rem;
+}
+
+#post.md-style-juejin #article-container pre code {
+  background: transparent;
+}
+
+#post.md-style-juejin #article-container figure.highlight {
+  overflow: hidden;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools {
+  min-height: 2.45rem;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid var(--md-border);
+  background: var(--md-code-dark);
+  color: #cbd5e1;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools .code-lang {
+  color: #dbeafe;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools i:hover {
+  color: #8fc4ff;
+}
+
+#post.md-style-juejin #article-container figure.highlight table {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#post.md-style-juejin #article-container .code-expand-btn {
+  border-top: 1px solid var(--md-border);
+  background: linear-gradient(180deg, rgba(246, 248, 250, 0.3), var(--md-code-bg));
+  color: var(--md-muted);
+}
+
+#post.md-style-juejin #article-container .code-expand-btn:hover {
+  color: var(--md-main);
+}
+
+#post.md-style-juejin #article-container .code-expand-btn.expand-done {
+  background: var(--md-surface-2);
+}
+
+#post.md-style-juejin #article-container .code-expand-btn.expand-done + table,
+#post.md-style-juejin #article-container .code-expand-btn.expand-done + pre {
+  margin-bottom: calc(1.8em - 2px);
+}
+
+#post.md-style-juejin #article-container .tabs {
+  margin: 1.1rem 0;
+  border: 1px solid var(--md-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--md-surface);
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-juejin #article-container .tabs > .nav-tabs {
+  display: flex;
+  background: var(--md-surface-2);
+}
+
+#post.md-style-juejin #article-container .tabs > .nav-tabs > .tab {
+  flex-grow: 1;
+  padding: 0.78rem 1rem;
+  border: 0;
+  border-top: 3px solid transparent;
+  background: transparent;
+  color: var(--md-muted);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+#post.md-style-juejin #article-container .tabs > .nav-tabs > .tab.active {
+  border-top-color: var(--md-main);
+  background: var(--md-surface);
+  color: var(--md-main-strong);
+}
+
+#post.md-style-juejin #article-container .tabs > .nav-tabs > .tab:not(.active):hover {
+  background: var(--md-soft);
+  color: var(--md-main);
+}
+
+#post.md-style-juejin #article-container .tabs > .tab-contents .tab-item-content {
+  padding: 1rem 1rem 0.9rem;
+}
+
+#post.md-style-juejin #article-container details {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--md-border);
+  border-radius: 8px;
+  background: var(--md-surface-2);
+}
+
+#post.md-style-juejin #article-container details summary {
+  cursor: pointer;
+  color: var(--md-main-strong);
+  font-weight: 800;
+}
+
+#post.md-style-juejin #article-container details > :not(summary) {
+  margin-top: 0.75rem;
+}
+
+@media screen and (max-width: 768px) {
+  #post.md-style-juejin #article-container {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  #post.md-style-juejin #article-container h1 {
+    font-size: 1.56rem;
+  }
+
+  #post.md-style-juejin #article-container h2 {
+    margin-top: 1.8rem;
+    font-size: 1.22rem;
+  }
+
+  #post.md-style-juejin #article-container h3 {
+    font-size: 1.06rem;
+  }
+
+  #post.md-style-juejin #article-container th,
+  #post.md-style-juejin #article-container td {
+    padding: 0.64rem 0.7rem;
+  }
+
+  #post.md-style-juejin #article-container :is(table, figure.highlight, pre, .tabs, blockquote, .note, details) {
+    border-radius: 8px;
+  }
+
+  #post.md-style-juejin #article-container .tabs > .nav-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  #post.md-style-juejin #article-container .tabs > .nav-tabs > .tab {
+    flex: 0 0 auto;
+    padding: 0.68rem 0.8rem;
+    white-space: nowrap;
+  }
+}

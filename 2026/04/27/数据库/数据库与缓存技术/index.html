@@ -1,0 +1,1155 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>数据库与缓存技术简析 | 一只喵的星球~</title><meta name="author" content="横杠一"><meta name="copyright" content="横杠一"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据库与缓存相关的技术简析, 之前都是用到了搜一下怎么用，没有正经系统的学习过，这篇算是与Docker\PgSQL\Redis的正式见面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库与缓存技术简析">
+<meta property="og:url" content="https://yizhimiao3.vercel.app/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="一只喵的星球~">
+<meta property="og:description" content="数据库与缓存相关的技术简析, 之前都是用到了搜一下怎么用，没有正经系统的学习过，这篇算是与Docker\PgSQL\Redis的正式见面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260519001447942.png">
+<meta property="article:published_time" content="2026-04-27T15:59:59.000Z">
+<meta property="article:modified_time" content="2026-05-22T17:18:44.830Z">
+<meta property="article:author" content="横杠一">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="PostgreSql">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="TypeORM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260519001447942.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数据库与缓存技术简析",
+  "url": "https://yizhimiao3.vercel.app/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/",
+  "image": "https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260519001447942.png",
+  "datePublished": "2026-04-27T15:59:59.000Z",
+  "dateModified": "2026-05-22T17:18:44.830Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "横杠一",
+      "url": "https://yizhimiao3.vercel.app"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yizhimiao3.vercel.app/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据库与缓存技术简析',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/yi.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/markdown-yuque.css"><link rel="stylesheet" href="/css/markdown-feishu.css"><link rel="stylesheet" href="/css/markdown-juejin.css"><link rel="stylesheet" href="/css/markdown-notion.css"><link rel="stylesheet" href="/css/photos.css"><link rel="stylesheet" href="https://cdn2.codesign.qq.com/icons/xnjPoz51lMm6KZL/latest/iconfont.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://at.alicdn.com/t/c/font_5167269_5wgynhk6t99.css"><link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"><meta name="generator" content="Hexo 8.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260425161722468.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><!-- .menus_item--><div class="icat_menus_item"></div><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a><!-- .menus_item--><div class="icat_menus_item"></div><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> 分类列表</span></a></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260519001447942.png);"><nav class="show" id="nav"><div id="nav-group"><span id="blog-info"><a class="has-tip" href="/" aria-label="返回博客主页" alt="博客主页" rel="home"><div class="site-name"><span>一只喵的星球~</span><span style="letter-spacing: 2px">Hello</span></div></a><a class="site-move has-tip" href="/" aria-label="返回博客主页" alt="博客主页" rel="home"><div class="site-name">一只喵的星球~</div></a></span><div id="menus"><div class="menus_items has-tip" id="menu-btn" href="javascript:void(0)" aria-label="展开站内菜单" alt="主菜单">开始浏览</div><div class="menus_items has-tip" id="column-btn" href="javascript:void(0)" aria-label="展开专栏内容" alt="专栏">专栏</div></div><div id="nav-right"><div id="nav-totop"><a class="site-page totopbtn has-tip" id="nav-totop-btn" href="javascript:void(0)" aria-label="回到顶部" alt="顶部"><i class="fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="travellings"><a class="site-page has-tip" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" aria-label="开往" alt="开往"><i class="iconfont icon-icat-subway"></i></a></div><div id="random-post"><a class="site-page has-tip" href="javascript:toRandomPost()" aria-label="随机文章" alt="随机"><i class="iconfont icon-icat-random"></i></a></div><div id="search-button"><a class="site-page social-icon search has-tip" href="javascript:void(0)" aria-label="搜索" alt="搜索"><i class="iconfont icon-icon_search_line"></i></a></div><div id="console"><a class="site-page menus_items has-tip" id="control_btn" href="javascript:void(0)" aria-label="中控台设置" alt="设置"><label><i class="upper_left"></i><i class="upper_right"></i><i class="below_left"></i><i class="below_right"></i></label></a></div><!-- AI-Modify: 将原移动菜单图标改为相册集入口，后续 /photos/ 页面展示瀑布流图片。--><div id="photos-entry"><a class="site-page has-tip" href="/photos/" aria-label="相册集" alt="相册"><i class="iconfont icon-icat-photos"></i></a></div></div></div><!-- AI-Modify: 顶部弹出面板改为站点真实分类、标签、归档和功能入口。--><div class="menu" id="site-menu"><div class="clo_itme menu_items active"><div class="menus_item"><div class="item_box"><div class="site-tips">快速入口</div><div class="site-page"><a class="menu-page" href="/"><i class="iconfont icon-icat-planet"></i><span>首页</span></a></div><div class="site-page"><a class="menu-page" href="/archives/"><i class="iconfont icon-icat-archives"></i><span>文章归档</span></a></div><div class="site-page"><a class="menu-page" href="/categories/"><i class="iconfont icon-icat-category"></i><span>文章分类</span></a></div><div class="site-page"><a class="menu-page" href="/tags/"><i class="iconfont icon-icat-tags"></i><span>文章标签</span></a></div><div class="site-page"><a class="menu-page" href="/messageboard/"><i class="iconfont icon-icat-about"></i><span>留言板</span></a></div></div><div class="item_box"><div class="site-tips">年份归档</div><div class="site-page"><a class="menu-page hide" href="/archives/"><i class="iconfont icon-icat-archives"></i><span>所有文章</span><i class="iconfont icon-icat-arrow-below arrow"></i></a><div class="sub-menu"><a class="menus_item_child" href="/archives/2026/">2026</a></div></div></div><div class="item_box"><div class="site-tips">热门分类</div><div class="site-page"><a class="menu-page" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/"><i class="iconfont icon-icat-category"></i><span>知识分享 (1)</span></a></div><div class="site-page"><a class="menu-page" href="/categories/%E7%9F%A5%E8%AF%86%E5%88%86%E4%BA%AB/%E7%94%9F%E5%91%BD/"><i class="iconfont icon-icat-category"></i><span>生命 (1)</span></a></div><div class="site-page"><a class="menu-page" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AF%87/"><i class="iconfont icon-icat-category"></i><span>数据库篇 (1)</span></a></div><div class="site-page"><a class="menu-page" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AF%87/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/"><i class="iconfont icon-icat-category"></i><span>后端开发 (1)</span></a></div></div><div class="item_box"><div class="site-tips">常用标签</div><div class="site-page"><a class="menu-page hide" href="/tags/"><i class="iconfont icon-icat-tags"></i><span>标签列表</span><i class="iconfont icon-icat-arrow-below arrow"></i></a><div class="sub-menu"><a class="menus_item_child" href="/tags/%E7%94%9F%E7%89%A9/">生物</a><a class="menus_item_child" href="/tags/%E7%9F%A5%E8%AF%86/">知识</a><a class="menus_item_child" href="/tags/Redis/">Redis</a><a class="menus_item_child" href="/tags/PostgreSql/">PostgreSql</a><a class="menus_item_child" href="/tags/Docker/">Docker</a><a class="menus_item_child" href="/tags/TypeORM/">TypeORM</a></div></div></div></div></div><div class="clo_itme column_items"><div class="menus_item"><div class="item_box"><div class="site-tips">最近文章</div><div class="site-page"><a class="menu-page" href="/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/" title="数据库与缓存技术简析"><i class="iconfont icon-icat-immediately"></i><span>数据库与缓存技术简析</span></a></div><div class="site-page"><a class="menu-page" href="/2026/04/25/%E7%9F%A5%E8%AF%86/%E7%94%9F%E7%89%A9%E4%B8%96%E7%95%8C/" title="生物世界：从微观到宏观的生命奥秘"><i class="iconfont icon-icat-immediately"></i><span>生物世界：从微观到宏观的生命奥秘</span></a></div></div><div class="item_box"><div class="site-tips">站点工具</div><div class="site-page"><a class="menu-page" id="nav-panel-search" href="javascript:void(0)"><i class="iconfont icon-icon_search_line"></i><span>站内搜索</span></a></div><div class="site-page"><a class="menu-page" href="javascript:toRandomPost()"><i class="iconfont icon-icat-random"></i><span>随机文章</span></a></div><div class="site-page"><a class="menu-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html"><i class="iconfont icon-icat-subway"></i><span>开往</span></a></div></div><div class="item_box"><div class="site-tips">站内页面</div><div class="site-page"><a class="menu-page" href="/messageboard/"><i class="iconfont icon-icat-about"></i><span>留言板</span></a></div><div class="site-page"><a class="menu-page" href="/categories/"><i class="iconfont icon-icat-category"></i><span>分类</span></a></div><div class="site-page"><a class="menu-page" href="/tags/"><i class="iconfont icon-icat-tags"></i><span>标签</span></a></div></div><div class="item_box"><div class="site-tips">站点统计</div><div class="site-page"><a class="menu-page" href="/archives/"><i class="iconfont icon-icat-chart"></i><span>文章 2</span></a></div><div class="site-page"><a class="menu-page" href="/tags/"><i class="iconfont icon-icat-tags"></i><span>标签 6</span></a></div><div class="site-page"><a class="menu-page" href="/categories/"><i class="iconfont icon-icat-category"></i><span>分类 4</span></a></div></div></div></div><div class="clo_itme control_items"><div class="menus_item"><div class="item_box" id="sayhi-info"><div class="site-item"><div class="sayhi-time" data-role="nav-greeting">欢迎回来，今天也适合写点东西</div><div class="item-group welcome"><div class="sayhi-name">Hey！旅行者</div><div class="sayhi-distance">本站已经收集了 2 篇文章</div></div><div class="item-group information"><div class="sayhi-position">当前页面：数据库与缓存技术简析</div><div class="sayhi-ip">最近更新：2026-04-27</div></div></div></div><div class="item_box"><div class="site-tips">最近文章</div><div id="recent-comment"><a class="site-item nav-recent-post" href="/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/" title="数据库与缓存技术简析"><div><div class="comment-user">数据库与缓存技术简析</div><div class="comment-content">2026-04-27</div></div></a><a class="site-item nav-recent-post" href="/2026/04/25/%E7%9F%A5%E8%AF%86/%E7%94%9F%E7%89%A9%E4%B8%96%E7%95%8C/" title="生物世界：从微观到宏观的生命奥秘"><div><div class="comment-user">生物世界：从微观到宏观的生命奥秘</div><div class="comment-content">2026-04-25</div></div></a></div></div></div><div class="console"><div class="item_box" id="progress"><div class="site-tips">继续阅读</div><div class="site-item"><span>阅读进度</span><b id="nav-read-percent">0%</b></div></div><div class="item_box" id="button-group"><div class="site-tips">功能开关</div><div class="item-group"><div class="site-item" id="console-mode" data-console-action="darkmode"><i class="iconfont icon-icat-dark"></i><span>深色模式</span></div><!-- AI-Modify: 添加滑动阻尼开关，配合 meuicat.js 中的 Lenis 初始化逻辑。--><div class="site-item" id="console-smooth" data-console-action="smooth"><i class="iconfont icon-icat-slide"></i><span>滑动阻尼</span></div><div class="site-item" id="console-readmode" data-console-action="readmode"><i class="iconfont icon-icat-slide"></i><span>阅读模式</span></div><div class="site-item" id="console-translate" data-console-action="translate"><i class="iconfont icon-icat-translate"></i><span>繁体中文</span></div><div class="site-item" id="console-aside" data-console-action="aside"><i class="iconfont icon-icat-aside"></i><span>侧栏显示</span></div><div class="site-item" id="console-search" data-console-action="search"><i class="iconfont icon-icon_search_line"></i><span>站内搜索</span></div></div></div><div class="site-count"><div class="item_box" id="webinfo-count"><div class="webinfo-item"><div class="item-name">文章数目</div><div class="item-count">2</div></div><div class="webinfo-item"><div class="item-name">标签</div><div class="item-count">6</div></div><div class="webinfo-item"><div class="item-name">分类</div><div class="item-count">4</div></div><div class="webinfo-item"><div class="item-name">最近更新</div><div class="item-count">2026-04-27</div></div></div></div></div></div></div></nav><div id="post-info"><h1 class="post-title">数据库与缓存技术简析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2026-04-27T15:59:59.000Z" title="发表于 2026-04-27 23:59:59">2026-04-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AF%87/">数据库篇</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AF%87/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">后端开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div class="md-style-yuque" id="post" data-markdown-style="yuque"><article class="container post-content" id="article-container"><h1 id="一、数据库与缓存技术揭秘"><a href="#一、数据库与缓存技术揭秘" class="headerlink" title="一、数据库与缓存技术揭秘"></a>一、数据库与缓存技术揭秘</h1><h2 id="1-目标"><a href="#1-目标" class="headerlink" title="1. 目标"></a>1. 目标</h2><ul>
+<li>初中级目标:<ul>
+<li>掌握Docker基础使用，能通过Docker准备开发环境</li>
+<li>理解数据库分类与缓存基础知识，掌握SQL与缓存处理</li>
+<li>掌握PostgreSQL环境搭建与Navicat操作</li>
+<li>了解Redis缓存技术及其Docker安装方式</li>
+</ul>
+</li>
+<li>高级目标:<ul>
+<li>能根据业务需求选择合适数据库（MySQL&#x2F;PostgreSQL）</li>
+<li>掌握ORM方案，能用TypeORM定义表实体</li>
+<li>深入掌握Redis缓存技术及其Docker部署</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-大纲"><a href="#2-大纲" class="headerlink" title="2. 大纲"></a>2. 大纲</h2><ul>
+<li>核心内容:<ul>
+<li>Docker环境准备与优化</li>
+<li>PostgreSQL入门与实践（SQL基础、高级功能）</li>
+<li>Redis缓存技术</li>
+<li>Node.js数据持久化集成</li>
+<li>TypeORM框架使用</li>
+</ul>
+</li>
+<li>特色内容:<ul>
+<li>PostgreSQL全文检索功能</li>
+<li>数据分区与并行查询</li>
+<li>JSON&#x2F;JSONB数据类型支持</li>
+<li>JavaScript编写存储过程</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-补充资料"><a href="#3-补充资料" class="headerlink" title="3. 补充资料"></a>3. 补充资料</h2><ul>
+<li><p><strong><font style="color:rgb(15, 17, 21);">Docker 官方教程</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://docs.docker.com/get-started/"><font style="color:rgb(57, 100, 254);">https://docs.docker.com/get-started/</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">Docker GUI 工具 (Docker Desktop)</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop/"><font style="color:rgb(57, 100, 254);">https://www.docker.com/products/docker-desktop/</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">Docker Hub</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-hub/"><font style="color:rgb(57, 100, 254);">https://www.docker.com/products/docker-hub/</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">Docker Compose</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://docs.docker.com/compose/"><font style="color:rgb(57, 100, 254);">https://docs.docker.com/compose/</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">Docker PostgreSQL (Bitnami镜像)</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://hub.docker.com/r/bitnami/postgresql"><font style="color:rgb(57, 100, 254);">https://hub.docker.com/r/bitnami/postgresql</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">Docker Redis (官方镜像)</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://hub.docker.com/_/redis"><font style="color:rgb(57, 100, 254);">https://hub.docker.com/_&#x2F;redis</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">TypeORM 文档</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://typeorm.io/"><font style="color:rgb(57, 100, 254);">https://typeorm.io/</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">Redis 官方文档 (入门)</font></strong><font style="color:rgb(15, 17, 21);">：</font><a target="_blank" rel="noopener" href="https://redis.io/docs/latest/develop/get-started/"><font style="color:rgb(57, 100, 254);">https://redis.io/docs/latest/develop/get-started/</font></a></p>
+</li>
+<li><p><strong><font style="color:rgb(15, 17, 21);">PostgreSQL 官方文档 (PDF，版本17)</font></strong><font style="color:rgb(15, 17, 21);"></font><font style="color:rgb(15, 17, 21);"></font></p>
+</li>
+<li><p>关键资源:</p>
+<ul>
+<li>Docker官方文档及GUI工具</li>
+<li>PostgreSQL 17官方文档</li>
+<li>Redis官方文档</li>
+<li>TypeORM框架文档</li>
+<li>Navicat Premium连接工具</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-相关面试真题"><a href="#4-相关面试真题" class="headerlink" title="4. 相关面试真题"></a>4. 相关面试真题</h2><ul>
+<li><p>典型问题:</p>
+<ul>
+<li>Docker环境下PostgreSQL性能优化策略</li>
+</ul>
+</li>
+</ul>
+<details class="lake-collapse"><summary id="uefc67a42"><span class="ne-text">在使用 Docker 部署 PostgreSQL 时，可以通过多种手段优化数据库性能</span></summary><p id="u1f00589c" class="ne-p"><strong><span class="ne-text">答案：</span></strong></p><ol class="ne-ol"><li id="u182414cc" data-lake-index-type="0"><strong><span class="ne-text">内存分配</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u3e20f34a" data-lake-index-type="0"><strong><span class="ne-text">shared_buffers</span></strong><span class="ne-text">：配置 PostgreSQL 使用的内存量。建议设置为总内存的 25%-40%。</span></li><li id="u9c46f45e" data-lake-index-type="0"><strong><span class="ne-text">work_mem</span></strong><span class="ne-text">：配置查询操作（如排序和连接）使用的内存大小。在数据处理较多的查询中，适当增大这个值可以提高效率。</span></li></ul></ul><ol start="2" class="ne-ol"><li id="u0bbd25b0" data-lake-index-type="0"><strong><span class="ne-text">缓存策略</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u240b3c22" data-lake-index-type="0"><span class="ne-text">Docker 容器限制：确保 Docker 容器拥有足够的内存资源，否则 PostgreSQL 的缓存机制可能受限。</span></li><li id="udfde9d4d" data-lake-index-type="0"><span class="ne-text">使用 Redis 来缓存热点数据，以减轻数据库的负担。</span></li></ul></ul><ol start="3" class="ne-ol"><li id="u895d2e3e" data-lake-index-type="0"><strong><span class="ne-text">存储优化</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u7952a8e2" data-lake-index-type="0"><span class="ne-text">挂载本地卷：将数据库文件挂载到主机上的 SSD 磁盘，从而提升数据读写性能。</span></li><li id="u19a751a2" data-lake-index-type="0"><span class="ne-text">I/O 限制：确保 Docker 没有对容器的 I/O 进行过多限制，否则可能影响数据库性能。</span></li></ul></ul><ol start="4" class="ne-ol"><li id="u63d4fa4c" data-lake-index-type="0"><strong><span class="ne-text">连接池管理</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u44786b06" data-lake-index-type="0"><span class="ne-text">使用 pgBouncer 作为连接池管理工具，减少数据库连接建立和断开的开销，提高并发性能。</span></li></ul></ul><ol start="5" class="ne-ol"><li id="u667e9de2" data-lake-index-type="0"><strong><span class="ne-text">调优参数</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="uddf13fe8" data-lake-index-type="0"><strong><span class="ne-text">max_connections</span></strong><span class="ne-text">：根据容器资源合理设置连接数。</span></li><li id="ub18cb599" data-lake-index-type="0"><strong><span class="ne-text">effective_cache_size</span></strong><span class="ne-text">：设置数据库的缓存容量预期，通常设置为主机内存的 50%-75%，帮助优化查询计划。</span></li></ul></ul></details>
+    
+<pre><code>- 大型项目中TypeORM的应用实践
+</code></pre>
+<details class="lake-collapse"><summary id="u6ecc1e44"><span class="ne-text">详细说明如何在大型项目中使用 TypeORM 进行数据库管理，及其对性能和维护的影响</span></summary><p id="u801c826d" class="ne-p"><strong><span class="ne-text">答案：</span></strong></p><p id="u84f44d02" class="ne-p"><span class="ne-text">TypeORM 是一个支持 TypeScript 的 ORM 框架，可以大幅提高数据库操作的开发效率。但在大型项目中使用时需要注意性能和维护的影响。</span></p><ol class="ne-ol"><li id="u691a777e" data-lake-index-type="0"><strong><span class="ne-text">数据库表实体定义</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="uceadf998" data-lake-index-type="0"><span class="ne-text">通过 TypeORM 的装饰器（如 @Entity、@Column 等）来定义数据库表的实体结构。这种方式便于开发者理解数据模型，但需要注意实体定义的复杂度。</span></li><li id="u88dba2a0" data-lake-index-type="0"><span class="ne-text">在大型项目中，建议将实体与业务逻辑分开，以便于代码的模块化管理。</span></li></ul></ul><ol start="2" class="ne-ol"><li id="u403104c4" data-lake-index-type="0"><strong><span class="ne-text">查询优化</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u4dd0aeb2" data-lake-index-type="0"><span class="ne-text">Lazy Relations 和 Eager Relations：使用 Lazy Relations 可以减少不必要的关联查询，适合需要按需加载关联数据的场景。而 Eager Relations 可以简化需要频繁关联查询的数据操作。</span></li><li id="u3bdb6aa0" data-lake-index-type="0"><span class="ne-text">QueryBuilder：TypeORM 提供了 QueryBuilder 以支持复杂查询场景。通过 QueryBuilder 可以对查询进行更精细的控制，并进行性能优化。</span></li></ul></ul><ol start="3" class="ne-ol"><li id="u9dded8da" data-lake-index-type="0"><strong><span class="ne-text">数据库迁移管理</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u42da5462" data-lake-index-type="0"><span class="ne-text">使用 TypeORM 的 migration 功能管理数据库表的变更，特别适合多开发者并行开发的场景，可以确保数据库的版本一致。</span></li><li id="u60a8ff02" data-lake-index-type="0"><span class="ne-text">在大型项目中，数据库变更频繁，使用 migration 可以自动化变更管理，但需要确保迁移脚本的可重性和测试。</span></li></ul></ul><ol start="4" class="ne-ol"><li id="u84f9d691" data-lake-index-type="0"><strong><span class="ne-text">性能影响</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u8415d880" data-lake-index-type="0"><span class="ne-text">增加 load（Lazy Loading）：在有大量关系表的情况下，增加 load 可能会导致 N+1 查询问题，影响性能。应当通过性能监控工具（如 APM）发现并优化。</span></li><li id="u4d41e818" data-lake-index-type="0"><span class="ne-text">批量操作：尽量使用批量插入和更新操作，避免逐条处理，以提升数据库的操作效率。</span></li></ul></ul></details>
+    
+<pre><code>- Redis持久化机制对数据一致性的影响
+</code></pre>
+<details class="lake-collapse"><summary id="u195f2fa7"><span class="ne-text">Redis 提供两种持久化机制：RDB（Redis Database File）和 AOF（Append Only File），它们各自的特性对数据一致性有不同的影响</span></summary><p id="u1af086f6" class="ne-p"><strong><span class="ne-text">答案：</span></strong></p><ol class="ne-ol"><li id="uee61be36" data-lake-index-type="0"><strong><span class="ne-text">RDB（快照）持久化</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u5afd390a" data-lake-index-type="0"><span class="ne-text">原理：定期将数据以快照的形式保存到磁盘中，备份间隔可以配置，但通常为秒级或分钟级。</span></li><li id="ua4ed135a" data-lake-index-type="0"><span class="ne-text">数据一致性影响：如果 Redis 崩溃，可能会丢失最近一次快照后的所有数据。对于高频更新的数据，这种方式存在一定的数据丢失风险，但性能较好。</span></li></ul></ul><ol start="2" class="ne-ol"><li id="uf235ad1e" data-lake-index-type="0"><strong><span class="ne-text">AOF（追加文件）持久化</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u5d259ebb" data-lake-index-type="0"><span class="ne-text">原理：通过将每次写入操作记录到日志中，Redis 可以在重启时重新执行日志中的命令以恢复数据。</span></li><li id="u574aab7a" data-lake-index-type="0"><span class="ne-text">数据一致性影响：AOF 具有更高的数据一致性保障（特别是设置为 always 或 everysec 模式时），但会对性能有一定的影响，特别是在高并发场景下，AOF 会增加磁盘 I/O 压力。</span></li></ul></ul><ol start="3" class="ne-ol"><li id="u47efb90c" data-lake-index-type="0"><strong><span class="ne-text">在生产环境中平衡性能与一致性</span></strong><span class="ne-text">：</span></li></ol><ul class="ne-list-wrap"><ul ne-level="1" class="ne-ul"><li id="u86d2fd6b" data-lake-index-type="0"><span class="ne-text">混合持久化：Redis 4.0 及之后版本支持 RDB 和 AOF 混合持久化方式，可以减少 AOF 重写的时间并提供较好的数据一致性。</span></li><li id="u414c90ef" data-lake-index-type="0"><span class="ne-text">复制和高可用：配置 Redis 主从复制（Master-Slave），并结合 Redis Sentinel 实现高可用性。在主节点出现故障时，可以自动切换到从节点，以保证数据可用性和一致性。</span></li><li id="ua47c4449" data-lake-index-type="0"><span class="ne-text">合理配置持久化策略：在高性能要求的场景下，可以减少 AOF 的同步频率，如每秒持久化一次（everysec），以在性能和数据一致性之间取得平衡。</span></li></ul></ul></details>
+
+<h2 id="5-Docker与数据库环境"><a href="#5-Docker与数据库环境" class="headerlink" title="5. Docker与数据库环境"></a>5. Docker与数据库环境</h2><p> 1）Docker基础概念</p>
+<ul>
+<li>核心优势:<ul>
+<li>轻量级: 相比传统虚拟机启动更快，资源占用更少</li>
+<li>一致性: 保证开发&#x2F;生产环境一致性，解决”在我机器上能运行”问题</li>
+<li>可移植性: 应用及其依赖打包为标准化单元，支持跨平台部署</li>
+</ul>
+</li>
+<li>技术原理:<ul>
+<li>通过操作系统级虚拟化实现资源隔离</li>
+<li><font style="color:rgb(15, 17, 21);">共享宿主机的操作系统内核</font></li>
+<li>采用容器化技术实现环境标准化</li>
+</ul>
+</li>
+</ul>
+<p> 2）Docker Compose</p>
+<ul>
+<li>编排功能:<ul>
+<li>通过YAML文件定义多容器应用</li>
+<li>支持服务依赖管理和启动顺序控制</li>
+<li>典型应用场景：同时部署PostgreSQL+Redis+Node.js</li>
+</ul>
+</li>
+<li>实践价值:<ul>
+<li>简化复杂应用部署流程</li>
+<li>确保服务间网络连通性</li>
+<li>方便进行服务扩展和版本管理</li>
+</ul>
+</li>
+</ul>
+<p> 3）安装指南</p>
+<ul>
+<li>Mac安装步骤:<ul>
+<li>官网下载Docker Desktop</li>
+<li>拖拽安装到Applications</li>
+<li>启动后验证运行状态</li>
+<li>终端执行docker –version验证</li>
+</ul>
+</li>
+<li>跨平台支持:<ul>
+<li>支持macOS&#x2F;Windows&#x2F;Linux</li>
+<li>自动适配不同系统版本</li>
+<li>提供统一的CLI操作接口</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-PostgreSQL核心特性"><a href="#6-PostgreSQL核心特性" class="headerlink" title="6. PostgreSQL核心特性"></a>6. PostgreSQL核心特性</h2><p> 1）对比分析</p>
+<ul>
+<li>vs MySQL:<ul>
+<li>功能扩展性: 支持自定义函数、JSON数据类型等高级特性</li>
+<li>事务处理: 更严格的ACID特性支持</li>
+<li>扩展能力: 通过PostGIS等插件支持地理空间数据</li>
+</ul>
+</li>
+<li>vs MongoDB:<ul>
+<li>数据模型: 关系型vs文档型</li>
+<li>事务支持: 多行事务能力更强</li>
+<li>查询性能: 复杂联表查询优势明显</li>
+</ul>
+</li>
+</ul>
+<p> 2）高级功能</p>
+<ul>
+<li>特色能力:<ul>
+<li>全文检索(替代Elasticsearch)</li>
+<li>数据分区(Table Partitioning)</li>
+<li>并行查询(Parallel Query)</li>
+<li>JSON&#x2F;JSONB数据类型支持</li>
+<li>JavaScript编写存储过程</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-Redis核心技术"><a href="#7-Redis核心技术" class="headerlink" title="7. Redis核心技术"></a>7. Redis核心技术</h2><p> 1）核心特性</p>
+<ul>
+<li>关键优势:<ul>
+<li>内存存储: 提供极速读写性能</li>
+<li>持久化: 支持RDB快照和AOF日志</li>
+<li>丰富类型: 字符串&#x2F;哈希&#x2F;列表&#x2F;集合等</li>
+</ul>
+</li>
+<li>应用场景:<ul>
+<li>热点数据缓存</li>
+<li>会话存储管理</li>
+<li>简单消息队列</li>
+</ul>
+</li>
+</ul>
+<p> 2）与SQL对比</p>
+<ul>
+<li>命令示例:<ul>
+<li>设置键值: SET key “value”</li>
+<li>哈希操作: HSET user:1 name “Alice”</li>
+<li>列表操作: LPUSH mylist “item”</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-Node-js集成方案"><a href="#8-Node-js集成方案" class="headerlink" title="8. Node.js集成方案"></a>8. Node.js集成方案</h2><p> 1）持久化实现</p>
+<ul>
+<li>技术栈:<ul>
+<li>PostgreSQL: 使用pg模块</li>
+<li>Redis: 使用redis客户端</li>
+<li>ORM: TypeORM框架</li>
+</ul>
+</li>
+<li>连接配置:</li>
+</ul>
+<p> 2）TypeORM</p>
+<ul>
+<li>核心功能:<ul>
+<li>实体-表映射</li>
+<li>关系管理(一对一&#x2F;一对多&#x2F;多对多)</li>
+<li>数据查询构建器</li>
+<li>事务支持</li>
+</ul>
+</li>
+<li>配置示例:</li>
+</ul>
+<h1 id="二、Docker基础与数据库环境配置"><a href="#二、Docker基础与数据库环境配置" class="headerlink" title="二、Docker基础与数据库环境配置"></a>二、Docker基础与数据库环境配置</h1><h2 id="1-Docker安装与配置"><a href="#1-Docker安装与配置" class="headerlink" title="1. Docker安装与配置"></a>1. Docker安装与配置</h2><ul>
+<li>环境适配问题：服务端开发涉及MacOS 15.0.1&#x2F;14、Windows7&#x2F;11、Linux(CentOS&#x2F;Ubuntu)等多平台环境配置差异</li>
+<li>Docker解决方案：<font style="color:rgba(0, 0, 0, 0.9);">Docker 采用</font><strong><font style="color:rgba(0, 0, 0, 0.9);">操作系统级虚拟化</font></strong><font style="color:rgba(0, 0, 0, 0.9);">技术，容器</font><strong><font style="color:rgba(0, 0, 0, 0.9);">直接</font>****<font style="color:#DF2A3F;">共享宿主机内核</font></strong><font style="color:rgba(0, 0, 0, 0.9);">，无需虚拟化完整操作系统。它将应用程序及其运行所需的依赖（文件系统、库文件、环境变量等）打包为轻量级容器镜像，从而在任何支持 Docker 的平台上实现”一次构建，到处运行”的环境一致性。</font></li>
+<li>安装方法：<ul>
+<li>Mac：官网下载Docker Desktop的.dmg文件，拖拽安装到Applications</li>
+<li>Windows：官网下载对应版本(AMD64&#x2F;ARM64)的.exe安装文件</li>
+<li>验证安装：终端执行docker –version查看版本号</li>
+</ul>
+</li>
+<li>核心优势：<ul>
+<li>轻量级：相比传统虚拟机启动更快，资源占用更少</li>
+<li>一致性：开发&#x2F;测试&#x2F;生产环境完全一致，解决”在我机器上能运行”问题</li>
+<li>可移植性：应用程序与依赖打包为标准化容器单元</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Docker核心概念"><a href="#2-Docker核心概念" class="headerlink" title="2. Docker核心概念"></a>2. Docker核心概念</h2><ul>
+<li>三大核心组件：<ul>
+<li>Image镜像：包含极简系统+服务的静态模板，可从官方仓库获取或自定义</li>
+<li>Container容器：镜像运行时的实例化对象</li>
+<li>Volume卷：宿主机与容器间的文件绑定和持久化存储方案</li>
+</ul>
+</li>
+</ul>
+<details class="lake-collapse"><summary id="u66614b73"><span class="ne-text">镜像和容器的区别</span></summary><p id="u46b25a1d" class="ne-p"><span class="ne-text">Docker 容器和镜像是 Docker 最核心的两个概念，可以用一个类比来理解：</span></p><h3 id="fMPOg"><span class="ne-text">核心区别</span></h3><p id="u92752605" class="ne-p"><img src="https://cdn.nlark.com/yuque/0/2026/png/32802271/1778488121081-6ae6a459-ee50-42e4-bfd6-0e644c3ef302.png" width="547" title="" crop="0,0,1,1" id="u4f5fc8ff" class="ne-image"></p><hr id="BV0NO" class="ne-hr"><h3 id="NEtnu"><span class="ne-text">详细解释</span></h3><h4 id="kByXn"><span class="ne-text">镜像 (Image)</span></h4><ul class="ne-ul"><li id="ufc87a1ee" data-lake-index-type="0"><span class="ne-text">是一个</span><strong><span class="ne-text">分层构建</span></strong><span class="ne-text">的只读文件系统</span></li><li id="ub196d953" data-lake-index-type="0"><span class="ne-text">包含了运行应用所需的全部内容：代码、运行时、库、环境变量、配置文件</span></li><li id="u438f27fd" data-lake-index-type="0"><span class="ne-text">类似于一个&quot;快照&quot;或&quot;模板&quot;，本身不运行任何程序</span></li><li id="udcd1cc8d" data-lake-index-type="0"><span class="ne-text">可以从 Docker Hub 拉取，也可以通过 Dockerfile 自定义构建</span></li></ul><h4 id="zhHUg"><span class="ne-text">容器 (Container)</span></h4><ul class="ne-ul"><li id="ub7a99a13" data-lake-index-type="0"><span class="ne-text">是镜像的</span><strong><span class="ne-text">运行实例</span></strong></li><li id="u491d4027" data-lake-index-type="0"><span class="ne-text">在镜像的只读层之上，增加了一个</span><strong><span class="ne-text">可写层</span></strong><span class="ne-text">（容器层）</span></li><li id="ufb5874e4" data-lake-index-type="0"><span class="ne-text">容器内做的修改（如新建文件、修改配置）只影响这个可写层，</span><strong><span class="ne-text">不会改动原始镜像</span></strong></li><li id="u2250f444" data-lake-index-type="0"><span class="ne-text">停止容器后，可写层的数据默认会保留；删除容器后，可写层数据随之消失（除非使用了 Volume 持久化）</span></li></ul><hr id="vSG4Y" class="ne-hr"><h3 id="UYE3M"><span class="ne-text">关系图</span></h3><pre data-language="plain" id="iPTJt" class="ne-codeblock language-plain"><code>┌─────────────────────────────┐
+│      容器 (Container)        │  ← 动态、可读写、运行中
+│  ┌───────────────────────┐  │
+│  │    可写层 (容器层)      │  │  ← 容器内的修改都写在这里
+│  ├───────────────────────┤  │
+│  │    镜像层 3 (只读)      │  │
+│  ├───────────────────────┤  │
+│  │    镜像层 2 (只读)      │  │
+│  ├───────────────────────┤  │
+│  │    镜像层 1 (只读)      │  │  ← 基础镜像（如 Ubuntu）
+│  └───────────────────────┘  │
+└─────────────────────────────┘</code></pre><hr id="cFaoX" class="ne-hr"><h3 id="mX2sU"><span class="ne-text">常用命令对应</span></h3><p id="u8b9acd4f" class="ne-p"><img src="https://cdn.nlark.com/yuque/0/2026/png/32802271/1778488103352-57c1c2f4-102e-4c0b-bd3a-1c3ade414ffa.png" width="388" title="" crop="0,0,1,1" id="bDYs8" class="ne-image"></p><h3 id="bhtZX"><span class="ne-text">一句话总结</span></h3><div class="ne-quote"><p id="u6bbd2b96" class="ne-p"><strong><span class="ne-text">镜像是&quot;蓝图&quot;，容器是&quot;按蓝图建造并正在运行的房子&quot;。</span></strong><span class="ne-text"> 你可以用同一张蓝图建很多套房子，每套房子内部装修（可写层）互不影响，但蓝图本身（镜像）始终不变。</span></p></div><p id="uaf38baf2" class="ne-p"><br></p></details>
+
+<ul>
+<li>远程仓库：<ul>
+<li>Docker Hub：类比GitHub的集中式镜像仓库，存储各类预构建镜像</li>
+<li>使用流程：搜索所需镜像→拉取到本地→运行实例化</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-Docker-Hub与远程仓库"><a href="#3-Docker-Hub与远程仓库" class="headerlink" title="3. Docker Hub与远程仓库"></a>3. Docker Hub与远程仓库</h2><ul>
+<li>镜像获取流程：<ul>
+<li>登录Docker Desktop账号</li>
+<li>搜索框输入服务名称(如postgresql&#x2F;redis)</li>
+<li>选择官方或验证发布者(推荐bitnami组织)</li>
+<li>点击Pull下载镜像到本地</li>
+</ul>
+</li>
+<li>常用命令：<ul>
+<li>docker pull &lt;镜像名&gt;：拉取远程镜像</li>
+<li>docker images：查看本地镜像列表</li>
+<li>docker rmi &lt;镜像ID&gt;：删除本地镜像</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-Docker运行PostgreSQL"><a href="#4-Docker运行PostgreSQL" class="headerlink" title="4. Docker运行PostgreSQL"></a>4. Docker运行PostgreSQL</h2><ul>
+<li>运行步骤：<ul>
+<li>搜索并选择bitnami&#x2F;postgresql镜像</li>
+<li>点击Run进入容器配置界面</li>
+<li>关键参数：<ul>
+<li>容器名称：自定义(如pg)</li>
+<li>端口映射：5432:5432(TCP)</li>
+<li>环境变量：必须设置POSTGRES_PASSWORD等认证信息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>常见问题：<ul>
+<li>404 错误：通常因镜像签名失效导致，需重新拉取</li>
+<li>容器删除：需先停止运行中的容器实例</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-Docker运行Redis"><a href="#5-Docker运行Redis" class="headerlink" title="5. Docker运行Redis"></a>5. Docker运行Redis</h2><ul>
+<li>最佳实践：<ul>
+<li>选择bitnami&#x2F;redis官方镜像</li>
+<li>默认端口6379需要做端口映射</li>
+<li>可配置持久化卷保证数据安全</li>
+</ul>
+</li>
+<li>验证运行：<ul>
+<li>在Docker Desktop的Containers面板查看运行状态</li>
+<li>通过docker ps -a命令检查容器列表</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-Docker容器配置参数"><a href="#6-Docker容器配置参数" class="headerlink" title="6. Docker容器配置参数"></a>6. Docker容器配置参数</h2><ul>
+<li>关键配置项：<ul>
+<li>命名规则：建议使用服务类型+环境命名(如pg-dev)</li>
+<li>端口映射：格式为主机端口:容器端口&#x2F;协议类型</li>
+<li>环境变量：数据库类服务必须设置认证信息</li>
+<li>存储卷：重要数据应挂载到宿主机目录</li>
+</ul>
+</li>
+<li>操作提示：<ul>
+<li>配置错误时可随时删除重建容器</li>
+<li>复杂配置建议使用docker-compose.yml文件管理</li>
+</ul>
+</li>
+</ul>
+<h1 id="三、数据库与缓存技术揭秘"><a href="#三、数据库与缓存技术揭秘" class="headerlink" title="三、数据库与缓存技术揭秘"></a>三、数据库与缓存技术揭秘</h1><h2 id="1-连接数据库"><a href="#1-连接数据库" class="headerlink" title="1. 连接数据库"></a>1. 连接数据库</h2><p> 1）Navicat Premium连接数据库</p>
+<ul>
+<li>容器配置：<ul>
+<li>容器名称：pg</li>
+<li>端口映射：5432:5432</li>
+<li>环境变量：必须设置POSTGRESQL_PASSWORD（如”test123”或”测试”）</li>
+<li>注意：若未设置密码变量会报错，需删除失败容器后重新运行</li>
+</ul>
+</li>
+<li>连接参数：<ul>
+<li>主机：localhost</li>
+<li>端口：5432</li>
+<li>用户名：postgres</li>
+<li>密码：与容器启动时设置的POSTGRESQL_PASSWORD一致</li>
+<li>测试连接成功后即可操作数据库</li>
+</ul>
+</li>
+</ul>
+<p> 2）Redis连接数据库</p>
+<ul>
+<li>容器配置：<ul>
+<li>镜像选择：bitnami&#x2F;redis</li>
+<li>容器名称：redis-test</li>
+<li>端口映射：6379:6379</li>
+<li>环境变量：REDIS_PASSWORD（建议设置，如”test123”）</li>
+</ul>
+</li>
+<li>连接参数：<ul>
+<li>连接类型：单机模式</li>
+<li>主机：localhost</li>
+<li>端口：6379</li>
+<li>验证方式：使用设置的REDIS_PASSWORD</li>
+<li>测试连接可查看Redis版本信息</li>
+</ul>
+</li>
+</ul>
+<p> 3）Docker命令行操作</p>
+<ul>
+<li>常用命令：<ul>
+<li>docker pull [镜像名]：从 Docker Hub 中拉取镜像</li>
+<li>docker ps：查看运行中的容器</li>
+<li>docker images：列出本地镜像</li>
+<li>docker container ls -a：查看所有容器（包括停止的）</li>
+<li>docker exec -it [容器名] bash：进入容器内部</li>
+<li>docker run [镜像名]：运行容器</li>
+<li>docker stop&#x2F;rm [容器名]：停止&#x2F;删除容器</li>
+</ul>
+</li>
+<li>容器内部结构：<ul>
+<li>每个容器都是精简版Linux系统</li>
+<li>PostgreSQL数据默认存储在&#x2F;bitnami&#x2F;postgresql目录下</li>
+<li>可通过bash命令查看配置文件和数据文件</li>
+</ul>
+</li>
+<li>开发建议：<ul>
+<li>初学者建议使用Docker Desktop图形界面操作</li>
+<li>生产环境推荐使用docker-compose管理多容器</li>
+<li>重要数据应配置Volume持久化存储</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-数据库应用"><a href="#2-数据库应用" class="headerlink" title="2. 数据库应用"></a>2. 数据库应用</h2><p> 1）pg数据库操作</p>
+<ul>
+<li><p>pg基础使用</p>
+<ul>
+<li>查询基础操作<ul>
+<li>新建查询方法：在查询界面点击”新建查询”，可命名保存为”1.basic”等名称，方便后续导出作为复习资料</li>
+<li>基础SQL语句：<ul>
+<li>查询当前日期：SELECT current_date</li>
+<li>查询数据库版本：SELECT version()</li>
+</ul>
+</li>
+<li>执行方式：<ul>
+<li>点击运行按钮执行最后一句SQL</li>
+<li>框选特定SQL后点击”运行选择”可执行指定语句</li>
+</ul>
+</li>
+<li>注释语法：使用双横杠–作为单行注释标记</li>
+<li>运算功能：通过SELECT可执行基础运算，如SELECT 1+1返回计算结果2</li>
+</ul>
+</li>
+<li>核心SQL命令<ul>
+<li>关键命令分类：<ul>
+<li>数据查询：SELECT（可理解为操作运算符，能对后续表达式进行运算）</li>
+<li>数据操作：UPDATE</li>
+<li>结构操作：CREATE, DROP</li>
+<li>变量设置：SET</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pg创建表</p>
+<ul>
+<li>命令行创建表<ul>
+<li>基本语法：CREATE TABLE 表名(字段名 类型(长度),…)</li>
+<li>示例创建：</li>
+</ul>
+</li>
+<li>字段规范：<ul>
+<li>必须明确指定字段名和数据类型</li>
+<li>字符类型建议指定长度（如varchar(20)）</li>
+<li>多个字段用逗号分隔</li>
+</ul>
+</li>
+<li>执行验证：执行后需刷新表列表确认创建成功</li>
+<li>表结构修改<ul>
+<li>可视化修改：<ul>
+<li>右键表选择”设计表”可修改字段属性</li>
+<li>注意：命令行创建的表可能限制可视化修改某些属性</li>
+</ul>
+</li>
+<li>修改建议：<ul>
+<li>字段长度等属性建议在创建时确定</li>
+<li>复杂修改推荐使用SQL命令而非可视化工具</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pg可视化和命令创建表</p>
+<ul>
+<li>可视化建表流程<ul>
+<li>操作步骤：<ul>
+<li>选择”新建表”→”常规表”</li>
+<li>设置表名（如detail）</li>
+<li>添加字段：指定名称、类型、长度等属性</li>
+<li>可设置主键（如ID字段设为int4类型主键）</li>
+<li>保存完成创建</li>
+</ul>
+</li>
+<li>优势：<ul>
+<li>界面直观，降低初学门槛</li>
+<li>自动生成规范的SQL语句</li>
+<li>避免语法错误风险</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>创建方式对比<ul>
+<li>命令行创建：<ul>
+<li>优点：灵活精确，适合批量操作</li>
+<li>缺点：需记忆语法，易出错</li>
+</ul>
+</li>
+<li>可视化创建：<ul>
+<li>优点：操作简单，所见即所得</li>
+<li>缺点：复杂操作受限</li>
+</ul>
+</li>
+<li>学习建议：初学者优先使用可视化工具，熟练后逐步过渡到命令行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pg插入数据</p>
+<ul>
+<li>基本语法<ul>
+<li>语法结构: INSERT INTO 表名(字段1,字段2) VALUES(值1,值2)</li>
+<li>自增字段处理: 当表中存在自增ID字段时，可以省略该字段的插入，系统会自动生成自增值</li>
+<li>字段选择: 只需指定需要插入值的字段名，如示例中的title和description字段</li>
+</ul>
+</li>
+<li>具体操作示例<ul>
+<li>示例数据1:<ul>
+<li>字段：title和description</li>
+<li>值：(‘测试’, ‘111111’)</li>
+</ul>
+</li>
+<li>示例数据2:<ul>
+<li>字段：title</li>
+<li>值：(‘测试1’)</li>
+</ul>
+</li>
+<li>执行方法: 框选SQL语句后点击运行，注意语句末尾必须加分号</li>
+<li>结果验证: 执行后显示”影响到了一行”，刷新表可查看新插入的数据</li>
+</ul>
+</li>
+<li>注意事项<ul>
+<li>分号要求: SQL语句末尾必须加分号，这是良好的编程习惯</li>
+<li>自增ID处理: 可以配置默认值为NULL，系统会自动处理自增逻辑</li>
+<li>批量插入: 可以连续执行多个INSERT语句一次性插入多条记录</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pg查询数据</p>
+<ul>
+<li>基本查询语法<ul>
+<li>全表查询: SELECT * FROM 表名，如SELECT * FROM detail</li>
+<li>字段选择: 可以指定只查询特定字段，如SELECT title FROM detail或SELECT description FROM detail</li>
+</ul>
+</li>
+<li>查询结果展示<ul>
+<li>全字段查询: 会显示表中所有字段的值</li>
+<li>单字段查询: 只显示指定字段的值，结果更加简洁</li>
+<li>结果验证: 执行查询后可以立即看到表中符合条件的所有记录</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pg更新数据</p>
+<ul>
+<li>基本语法结构<ul>
+<li>语法格式: UPDATE 表名 SET 字段名&#x3D;新值 [WHERE 条件]</li>
+<li>核心操作: 通过UPDATE指定要修改的表，SET确定修改的字段和值</li>
+<li>注意事项: 必须明确要更新的具体行，否则会修改表中所有数据（如示例中未加WHERE条件导致全部title被改为”测试”）</li>
+</ul>
+</li>
+<li>条件更新详解<ul>
+<li>精确匹配: WHERE title&#x3D;’测试一’（将title等于”测试一”的记录修改为指定值）</li>
+<li>模糊匹配: WHERE title LIKE ‘测试%’（使用LIKE进行模式匹配）</li>
+<li>多条件更新: 可通过AND&#x2F;OR组合多个条件</li>
+</ul>
+</li>
+<li>常见错误与修正<ul>
+<li>错误示例: UPDATE detail SET title&#x3D;value（缺少WHERE条件导致全表更新）</li>
+<li>类型问题: 注意字段类型匹配，如VARCHAR类型值需要引号包裹</li>
+<li>语法验证: 执行前检查等号、逗号等基本语法符号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pg查询与修改数据</p>
+<ul>
+<li><p>更新操作流程</p>
+<ul>
+<li>确定要更新的表名（FROM子句）</li>
+<li>指定要修改的字段和新值（SET子句）</li>
+<li>添加精确的WHERE条件定位记录</li>
+<li>执行前预览SQL语句</li>
+<li>执行后验证数据变更</li>
+</ul>
+</li>
+<li><p>实际案例演示</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE detail SET title=&#x27;测试&#x27; WHERE title=&#x27;测试一&#x27;</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE detail SET title=title||&#x27;edu&#x27; WHERE title LIKE &#x27;测试%&#x27;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>pg删除数据</p>
+<ul>
+<li><p>删除语法规范</p>
+<ul>
+<li>基本格式: DELETE FROM 表名 WHERE 条件</li>
+<li>危险操作: 省略WHERE条件将清空整个表</li>
+<li>与TRUNCATE区别: DELETE可回滚，TRUNCATE是DDL操作</li>
+</ul>
+</li>
+<li><p>删除操作要点</p>
+<ul>
+<li>条件验证: 执行前先用SELECT验证WHERE条件匹配的记录</li>
+<li>备份建议: 重要数据删除前建议备份</li>
+<li>事务控制: 大批量删除建议使用事务</li>
+</ul>
+</li>
+<li><p>删除案例演示</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 删除特定记录</span><br><span class="line">DELETE FROM detail WHERE title=&#x27;测试一edu&#x27;</span><br><span class="line">-- 批量删除</span><br><span class="line">DELETE FROM detail WHERE title LIKE &#x27;测试%&#x27;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>操作注意事项</p>
+<ul>
+<li>编辑器问题: 某些SQL编辑器可能存在执行bug，建议刷新验证</li>
+<li>结果验证: 每次增删改操作后都应刷新数据查看实际效果</li>
+<li>语法严格性: SQL不是自由编程语言，必须严格遵守语法规则</li>
+</ul>
+</li>
+<li><p>pg应用拓展</p>
+<ul>
+<li><p>文档型数据存储</p>
+<ul>
+<li><p>JSONB类型优势：相比普通JSON类型，JSONB支持直接查询键值对，性能更好，是PostgreSQL特有的高级数据类型</p>
+</li>
+<li><p>创建文档表：</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE TABLE</span> docs (</span><br><span class="line">    id SERIAL <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">    <span class="comment">-- sub VARCHAR(50),</span></span><br><span class="line">    content JSONB <span class="keyword">NOT NULL</span>,</span><br><span class="line">    created_at <span class="type">TIMESTAMP</span> <span class="keyword">DEFAULT</span> <span class="built_in">CURRENT_TIMESTAMP</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+<li><p>数据插入：JSONB字段需要插入标准格式的JSON字符串，可通过json.stringify()验证格式</p>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 插入单条记录</span></span><br><span class="line"><span class="keyword">INSERT INTO</span> docs (sub,content) <span class="keyword">VALUES</span> (<span class="string">&#x27;测试标题&#x27;</span>,<span class="string">&#x27;&#123;&quot;type&quot;: &quot;article&quot;, &quot;title&quot;: &quot;Docker基础&quot;, &quot;tags&quot;: [&quot;docker&quot;, &quot;devops&quot;]&#125;&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 插入嵌套结构</span></span><br><span class="line"><span class="keyword">INSERT INTO</span> docs (content) <span class="keyword">VALUES</span> (<span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">    &quot;user&quot;: &#123;&quot;name&quot;: &quot;张三&quot;, &quot;age&quot;: 25&#125;,</span></span><br><span class="line"><span class="string">    &quot;settings&quot;: &#123;&quot;theme&quot;: &quot;dark&quot;, &quot;notifications&quot;: true&#125;,</span></span><br><span class="line"><span class="string">    &quot;items&quot;: [1, 2, 3]</span></span><br><span class="line"><span class="string">&#125;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSONB操作演示</p>
+<ul>
+<li><p>基础查询：</p>
+<table>
+<thead>
+<tr>
+<th>操作类型</th>
+<th>SQL 示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>基础查询</strong></td>
+<td><code>SELECT * FROM docs;</code></td>
+<td>获取完整记录，content 字段以 JSON 格式展示</td>
+</tr>
+<tr>
+<td><strong>字段提取（对象）</strong></td>
+<td><code>SELECT content-&gt;&gt;&#39;title&#39; FROM docs;</code></td>
+<td><code>-&gt;&gt;</code> 提取文本值，<code>-&gt;</code> 提取 JSON 对象</td>
+</tr>
+<tr>
+<td><strong>嵌套字段提取</strong></td>
+<td><code>SELECT content-&gt;&#39;user&#39;-&gt;&gt;&#39;name&#39; FROM docs;</code></td>
+<td>链式提取嵌套属性</td>
+</tr>
+<tr>
+<td><strong>数组元素访问</strong></td>
+<td><code>SELECT content-&gt;&#39;tags&#39;-&gt;&gt;0 FROM docs;</code></td>
+<td>提取 tags 数组第一个元素</td>
+</tr>
+<tr>
+<td><strong>包含查询</strong></td>
+<td><code>SELECT * FROM docs WHERE content @&gt; &#39;{&quot;type&quot;: &quot;article&quot;}&#39;;</code></td>
+<td><code>@&gt;</code> 判断 JSON 是否包含指定键值</td>
+</tr>
+<tr>
+<td><strong>键存在判断</strong></td>
+<td><code>SELECT * FROM docs WHERE content ? &#39;title&#39;;</code></td>
+<td><code>?</code> 判断顶层是否存在指定键</td>
+</tr>
+<tr>
+<td><strong>数组包含</strong></td>
+<td><code>SELECT * FROM docs WHERE content-&gt;&#39;tags&#39; ? &#39;docker&#39;;</code></td>
+<td>判断数组中是否包含某元素</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>字段提取：</p>
+  <!-- 这是一张图片，ocr 内容为： -->
+<p>  <img src="https://cdn.nlark.com/yuque/0/2026/png/32802271/1778490091124-394a9bc9-d2cc-465e-b639-22a3f1144737.png"></p>
+</li>
+</ul>
+</li>
+<li><p>对比MySQL：PostgreSQL无需额外JSON解析库，查询语法更简洁高效</p>
+</li>
+</ul>
+</li>
+<li><p>事务处理</p>
+<ul>
+<li>事务特性：ACID（原子性、一致性、隔离性、持久性）</li>
+</ul>
+  <!-- 这是一张图片，ocr 内容为： -->
+<p>  <img src="https://cdn.nlark.com/yuque/0/2026/png/32802271/1778490201309-e6612f57-ac4e-49eb-bf8e-021268dcaf66.png"></p>
+<ul>
+<li><p>基本语法：</p>
+<ul>
+<li>通过 <code>BEGIN</code>和<code>COMMIT</code>或<code>ROLLBACK</code>控制事务。</li>
+</ul>
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 1. 开启事务</span></span><br><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"><span class="comment">-- 或 START TRANSACTION;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 2. 执行一系列 SQL 操作</span></span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance <span class="operator">=</span> balance <span class="operator">-</span> <span class="number">100</span> <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span>;  <span class="comment">-- 扣款</span></span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance <span class="operator">=</span> balance <span class="operator">+</span> <span class="number">100</span> <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">2</span>;  <span class="comment">-- 收款</span></span><br><span class="line"><span class="keyword">INSERT INTO</span> orders (user_id, amount) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="number">100</span>);       <span class="comment">-- 生成订单</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 3. 提交事务（所有操作永久生效）</span></span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
+
+  <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance <span class="operator">=</span> balance <span class="operator">-</span> <span class="number">100</span> <span class="keyword">WHERE</span> id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 假设这里发生错误（如余额不足、约束冲突等）</span></span><br><span class="line"><span class="comment">-- 或者通过业务逻辑判断需要撤销</span></span><br><span class="line">IF (balance <span class="operator">&lt;</span> <span class="number">0</span>) <span class="keyword">THEN</span></span><br><span class="line">    <span class="keyword">ROLLBACK</span>;  <span class="comment">-- 撤销整个事务，数据恢复到 BEGIN 之前的状态</span></span><br><span class="line"><span class="keyword">END</span> IF;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 如果一切正常</span></span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong><font style="color:rgba(0, 0, 0, 0.9);">关键原则</font></strong><font style="color:rgba(0, 0, 0, 0.9);">：事务中任一 SQL 执行失败，或业务条件不满足时，必须执行 </font><code>&lt;font style=&quot;color:rgba(0, 0, 0, 0.9);background-color:rgba(0, 0, 0, 0.03);&quot;&gt;ROLLBACK&lt;/font&gt;</code><font style="color:rgba(0, 0, 0, 0.9);"> 撤销整个事务，确保数据不会出现”只扣款未到账”的中间状态。</font></p>
+</blockquote>
+</li>
+<li><p>典型场景：电商下单流程（支付→生成订单→物流）必须保证要么全部成功，要么全部回滚</p>
+</li>
+<li><p>错误处理：任一SQL失败时需执行ROLLBACK撤销整个事务</p>
+</li>
+</ul>
+</li>
+<li><p>存储过程</p>
+<ul>
+<li><strong><font style="color:rgb(15, 17, 21);">它就像是你在数据库里自己定义的一个公式或小工具，可以把复杂的计算或重复的操作封装起来，随时调用。</font></strong></li>
+<li>创建方式：<ul>
+<li>SQL创建：CREATE FUNCTION add_numbers(a INT, b INT) RETURNS INT AS…</li>
+<li>可视化工具创建：通过GUI定义参数和返回值</li>
+</ul>
+</li>
+<li>函数调用：SELECT add_numbers(1,1)返回计算结果</li>
+<li>字符串函数：如LENGTH(title)可计算字段长度</li>
+<li>高级特性：支持用JavaScript等语言编写存储过程（需安装PLV8扩展）</li>
+</ul>
+</li>
+<li><p>数据类型对比</p>
+<ul>
+<li>基础类型：<ul>
+<li>整型：INTEGER, BIGINT</li>
+<li>浮点：REAL, DOUBLE PRECISION</li>
+<li>字符：VARCHAR, TEXT</li>
+<li>布尔：BOOLEAN</li>
+</ul>
+</li>
+<li>高级类型：<ul>
+<li>数组：支持各种基础类型的数组</li>
+<li>JSON&#x2F;JSONB：文档型数据存储</li>
+<li>几何&#x2F;网络地址等特殊类型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-Redis应用"><a href="#3-Redis应用" class="headerlink" title="3. Redis应用"></a>3. Redis应用</h2><p><strong><font style="color:rgb(15, 17, 21);">Redis 就像一个放在电脑内存里的“超级字典”，可以极快地存入、查找和取出各种格式的数据。</font></strong><font style="color:rgba(0, 0, 0, 0.9);">Redis 用</font><strong><font style="color:rgba(0, 0, 0, 0.9);">内存换速度</font></strong><font style="color:rgba(0, 0, 0, 0.9);">，用</font><strong><font style="color:rgba(0, 0, 0, 0.9);">简单数据结构换效率</font></strong><font style="color:rgba(0, 0, 0, 0.9);">，作为数据库前的</font><strong><font style="color:rgba(0, 0, 0, 0.9);">缓存层</font></strong><font style="color:rgba(0, 0, 0, 0.9);">和</font><strong><font style="color:rgba(0, 0, 0, 0.9);">高性能数据存储</font></strong><font style="color:rgba(0, 0, 0, 0.9);">，专门处理读多写少、实时性要求高的场景。</font></p>
+<p> 1）Redis基础使用</p>
+<ul>
+<li>容器启动与连接<ul>
+<li>容器状态检查：通过观察Redis容器状态指示灯是否为绿色确认运行状态</li>
+<li>SQL文件导入：可通过”运行SQL文件”功能直接导入预先准备的SQL文件到数据库</li>
+<li>Redis连接配置：<ul>
+<li>单机版连接地址：localhost:6379</li>
+<li>认证方式：password（示例密码为”test123”）</li>
+<li>连接测试成功后即可开始查询操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>基本数据类型操作<ul>
+<li>字符串(String)操作<ul>
+<li>设置值：set key value（如set name 测试）</li>
+<li>获取值：get key（如get name）</li>
+<li>注意事项：<ul>
+<li>执行命令时需注意不要包含多余的分号</li>
+<li>未设置TTL(Time To Live)的值将永久存储</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>哈希(Hash)操作<ul>
+<li>设置字段值：hset key field value（如hset person name 哈哈哈）</li>
+<li>添加字段：可多次执行hset为同一key添加不同字段（如hset person age 18）</li>
+<li>获取字段值：hget key field</li>
+<li>获取全部值：hgetall key</li>
+</ul>
+</li>
+<li>列表(List)操作<ul>
+<li>左端插入：lpush key value（如lpush person:hobby ‘篮球’）</li>
+<li>右端插入：rpush key value（如rpush person:hobby ‘游泳’）</li>
+<li>获取范围内数据：lrange key start stop（如lrange person:hobby 0 1）</li>
+<li>获取长度：llen key</li>
+</ul>
+</li>
+<li>有序集合(Zset)操作<ul>
+<li>添加元素：zadd key score member（如zadd user 1 haha）</li>
+<li>特性：会根据score分数自动排序成员</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据过期设置<ul>
+<li>设置过期时间：<ul>
+<li>单独设置：expire key seconds（如expire name 3）</li>
+<li>设置值时指定：set key value ex seconds</li>
+</ul>
+</li>
+<li>应用场景：<ul>
+<li>用户登录态管理</li>
+<li>协同文档中的房间状态管理</li>
+<li>消息广播的临时存储</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p> 2）Redis持久化</p>
+<ul>
+<li>持久化必要性<ul>
+<li>内存数据易失性：服务器断电或宕机会导致内存数据全部丢失</li>
+<li>持久化解决方案：将内存数据定期保存到磁盘</li>
+</ul>
+</li>
+<li>持久化方式<ul>
+<li>RDB持久化：定时生成数据快照</li>
+<li>AOF持久化：记录所有写操作命令</li>
+<li>恢复过程：服务重启时从磁盘读取持久化数据加载到内存</li>
+</ul>
+</li>
+<li>使用建议<ul>
+<li>基础使用：掌握基本数据类型操作即可满足日常开发需求</li>
+<li>进阶内容：流(Stream)和消费组等高级特性可在实际项目中逐步学习</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-Node-js集成Redis和pg"><a href="#4-Node-js集成Redis和pg" class="headerlink" title="4. Node.js集成Redis和pg"></a>4. Node.js集成Redis和pg</h2><p> 1）创建项目并集成pg</p>
+<ul>
+<li>安装依赖：直接安装pg库即可使用PostgreSQL功能，安装命令为npm install pg</li>
+<li>连接配置：需要配置以下连接参数：<ul>
+<li>host：数据库主机名</li>
+<li>port：默认5432</li>
+<li>database：目标数据库名称</li>
+<li>user：连接用户名</li>
+<li>password：连接密码</li>
+</ul>
+</li>
+<li>连接池创建：使用new Pool()创建数据库连接池，连接成功后可通过pool.connect()获取客户端</li>
+<li>查询执行：通过client.query()方法执行SQL语句，如SELECT version()或SELECT * FROM docs</li>
+<li>结果处理：查询结果包含rows属性，可通过result.rows获取查询结果集</li>
+<li>查询技巧：<ul>
+<li>可使用JSON.stringify()格式化输出查询结果</li>
+<li>特定字段查询只需在SQL中指定所需字段名</li>
+<li>子查询可通过字段名直接访问，如children字段</li>
+</ul>
+</li>
+</ul>
+<p> 2）创建项目并集成Redis</p>
+<ul>
+<li>安装依赖：安装redis库，命令为npm install redis</li>
+<li>连接配置：基本配置参数包括：<ul>
+<li>host：默认localhost</li>
+<li>port：默认6379</li>
+<li>password：连接密码</li>
+</ul>
+</li>
+<li>客户端创建：使用createClient()方法创建Redis客户端</li>
+<li>事件监听：<ul>
+<li>on(‘error’)：处理连接错误</li>
+<li>on(‘connect’)：连接成功回调</li>
+</ul>
+</li>
+<li>数据操作：<ul>
+<li>使用client.set()设置键值对</li>
+<li>可通过第三个参数设置过期时间，如EX 10表示10秒后过期</li>
+</ul>
+</li>
+<li>连接验证：操作前需调用client.connect()建立连接</li>
+<li>实际应用：<ul>
+<li>常用于存储用户会话信息</li>
+<li>设置过期时间可自动清理过期数据</li>
+<li>操作结果可通过Redis客户端工具验证</li>
+</ul>
+</li>
+</ul>
+<h2 id="5-对象关系映射"><a href="#5-对象关系映射" class="headerlink" title="5. 对象关系映射"></a>5. 对象关系映射</h2><p> 1）对象关系映射应用示例</p>
+<ul>
+<li>定义：ORM(Object-Relational Mapping)是定义数据库表和程序对象之间映射关系的技术，全称为**<font style="color:rgba(0, 0, 0, 0.9);">Object-Relational Mapping</font>**。</li>
+<li>映射原理：数据库中的表字段与程序中的实体类属性一一对应，例如数据库中的user表对应程序中的User实体类，包含用户名、密码等相同字段。</li>
+<li>自动建表功能：当配置好ORM框架后，若数据库不存在对应表，框架会根据实体类定义自动创建数据表结构。</li>
+<li>TypeORM配置：<ul>
+<li>使用typeorm、pg等包实现PostgreSQL数据库连接<font style="color:rgba(0, 0, 0, 0.9);">Redis 混合持久化</font></li>
+<li>配置数据库连接池参数：host(127.0.0.1&#x2F;localhost)、port(5432)、username、password、database等</li>
+<li>支持多种数据库：MySQL、SQL Server、MongoDB等</li>
+</ul>
+</li>
+<li>实体类注解：<ul>
+<li>@Entity标记实体类对应数据库表</li>
+<li>@Column定义表字段属性（如ID、name、description、status等）</li>
+</ul>
+</li>
+<li>数据操作：<ul>
+<li>通过dataSource.manager.save(实体对象)可直接将对象保存到数据库</li>
+<li>无需编写SQL语句即可完成CRUD操作</li>
+</ul>
+</li>
+<li>示例演示：<ul>
+<li>创建Photo实体类后启动项目，自动生成photo表</li>
+<li>修改实体属性后重新编译执行，数据实时同步到数据库</li>
+<li>查询操作通过简单的方法调用实现（如dataSource.manager.find(Photo)）</li>
+</ul>
+</li>
+</ul>
+<h1 id="四、知识小结"><a href="#四、知识小结" class="headerlink" title="四、知识小结"></a>四、知识小结</h1><table>
+<thead>
+<tr>
+<th>知识点</th>
+<th>核心内容</th>
+<th>关键操作&#x2F;示例</th>
+<th>难度系数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Docker基础</td>
+<td>容器化技术原理与优势，镜像&#x2F;容器&#x2F;卷核心概念</td>
+<td>docker pull&#x2F;postgres docker run -e POSTGRES_PASSWORD&#x3D;xxx</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>PostgreSQL安装</td>
+<td>通过Docker部署PostgreSQL数据库</td>
+<td>端口映射5432，设置环境变量POSTGRES_PASSWORD</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>Redis安装</td>
+<td>通过Docker部署Redis内存数据库</td>
+<td>端口映射6379，AOF&#x2F;RDB持久化机制</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>Navicat使用</td>
+<td>数据库可视化工具连接管理</td>
+<td>创建PostgreSQL&#x2F;Redis连接，执行SQL查询</td>
+<td>⭐</td>
+</tr>
+<tr>
+<td>SQL基础语法</td>
+<td>CRUD操作（CREATE&#x2F;INSERT&#x2F;SELECT&#x2F;UPDATE&#x2F;DELETE）</td>
+<td>CREATE TABLE docs(content JSONB)SELECT contents-&gt;&gt;’type’</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>JSONB数据类型</td>
+<td>PostgreSQL特有的JSON二进制存储格式</td>
+<td>文档型数据存储，支持JSON路径查询</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>事务处理</td>
+<td>ACID特性与事务隔离级别</td>
+<td>BEGINCOMMITROLLBACK 多表操作原子性</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>存储过程</td>
+<td>数据库端业务逻辑封装</td>
+<td>JavaScript编写PG函数 CREATE FUNCTION add_numbers()</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Redis数据类型</td>
+<td>String&#x2F;Hash&#x2F;List&#x2F;Set&#x2F;ZSet&#x2F;Stream</td>
+<td>SETEX user:token 3600HMSET user:1001 name age</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>Node.js集成</td>
+<td>后端服务连接数据库方案</td>
+<td>pg.Pool()连接池 redis.createClient()</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>TypeORM</td>
+<td>对象关系映射框架</td>
+<td>@Entity()装饰器 自动同步数据库表结构</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>性能优化</td>
+<td>数据库索引&#x2F;连接池&#x2F;缓存策略</td>
+<td>连接池配置，Redis缓存击穿解决方案</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+</tbody></table>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://yizhimiao3.vercel.app">横杠一</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://yizhimiao3.vercel.app/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/">https://yizhimiao3.vercel.app/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://yizhimiao3.vercel.app" target="_blank">一只喵的星球~</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Redis/">Redis</a><a class="post-meta__tags" href="/tags/PostgreSql/">PostgreSql</a><a class="post-meta__tags" href="/tags/Docker/">Docker</a><a class="post-meta__tags" href="/tags/TypeORM/">TypeORM</a></div><div class="post-share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260519001447942.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/25/%E7%9F%A5%E8%AF%86/%E7%94%9F%E7%89%A9%E4%B8%96%E7%95%8C/" title="生物世界：从微观到宏观的生命奥秘"><img class="cover" src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260424113717639.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">生物世界：从微观到宏观的生命奥秘</div></div><div class="info-2"><div class="info-item-1">生物世界：从微观到宏观的生命奥秘目录 细胞：生命的基本单位 遗传与进化 生态系统 人类生物学   细胞：生命的基本单位 核心概念：所有生物体都由细胞构成，细胞是生命活动的基本结构和功能单位。  细胞的分类   特征 原核细胞 真核细胞    细胞核 无核膜 有核膜   DNA形式 环状DNA 线性DNA   细胞器 仅有核糖体 多种膜结合细胞器   大小 0.1-5 μm 10-100 μm   代表生物 细菌、古菌 植物、动物、真菌   细胞器的功能图解12345graph LR    A[细胞核] --&gt;|储存遗传信息| B[DNA]    C[线粒体] --&gt;|能量生产| D[ATP]    E[内质网] --&gt;|蛋白质合成与加工| F[蛋白质]    G[高尔基体] --&gt;|包装与运输| H[分泌囊泡]  细胞分裂：有丝分裂的阶段12345678910111213# 模拟细胞分裂阶段的伪代码def mitosis_stage(stage_name):    stages = &#123;        &quot;间期&quot;: &quot;D...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-social-icons"></div><div class="avatar-bg"><img src="/false" data-lazy-src="/false" onerror="this.onerror=null;this.src='/img/friend_404.gif'"/><!--.avatar-bg(style=`background-image: url(${url_for(theme.avatar.bgimg)})` class=theme.avatar.effect ? 'avatar-effect' : '')--><div class="active" id="author-state" data-last-active="2026-05-22T17:18:44.830Z" title="最近活跃：2026-05-23"><span></span>今天刚刚活跃</div></div><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260425161722468.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260425161722468.gif" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="card-author-info"><div class="author-name">横杠一</div><div class="author-desc">各美其美,美人之美,美美与共,____!</div></div><div class="is-author"><div class="author-introduce">一只<b>喵</b>的日常：<br/> <b>寻找猫粮</b>——
+自我升级迭代ing。<br/> <b>不定期营业</b>——
+享受生活ing。<br/>over<br/></div><div class="card-author"><div class="author-info"><span class="author-name">横杠一</span><span class="author-desc">各美其美,美人之美,美美与共,____!</span></div><a class="author-link" href="javascript:void(0)" onclick="pjax.loadUrl('/categories/生活随笔/')"><i class="MeuiCat icon-arrow-right-bold"></i></a></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到【一只喵】的星球，在这里分享收集到的猫粮物资~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF%E6%8F%AD%E7%A7%98"><span class="toc-number">1.</span> <span class="toc-text">一、数据库与缓存技术揭秘</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E6%A0%87"><span class="toc-number">1.1.</span> <span class="toc-text">1. 目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%A4%A7%E7%BA%B2"><span class="toc-number">1.2.</span> <span class="toc-text">2. 大纲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%A1%A5%E5%85%85%E8%B5%84%E6%96%99"><span class="toc-number">1.3.</span> <span class="toc-text">3. 补充资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E7%9C%9F%E9%A2%98"><span class="toc-number">1.4.</span> <span class="toc-text">4. 相关面试真题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Docker%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%8E%AF%E5%A2%83"><span class="toc-number">1.5.</span> <span class="toc-text">5. Docker与数据库环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-PostgreSQL%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7"><span class="toc-number">1.6.</span> <span class="toc-text">6. PostgreSQL核心特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Redis%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF"><span class="toc-number">1.7.</span> <span class="toc-text">7. Redis核心技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Node-js%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88"><span class="toc-number">1.8.</span> <span class="toc-text">8. Node.js集成方案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Docker%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">二、Docker基础与数据库环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Docker%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">1. Docker安装与配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Docker%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">2.2.</span> <span class="toc-text">2. Docker核心概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fMPOg"><span class="toc-number">2.2.1.</span> <span class="toc-text">核心区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NEtnu"><span class="toc-number">2.2.2.</span> <span class="toc-text">详细解释</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#kByXn"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">镜像 (Image)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#zhHUg"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">容器 (Container)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UYE3M"><span class="toc-number">2.2.3.</span> <span class="toc-text">关系图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mX2sU"><span class="toc-number">2.2.4.</span> <span class="toc-text">常用命令对应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bhtZX"><span class="toc-number">2.2.5.</span> <span class="toc-text">一句话总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Docker-Hub%E4%B8%8E%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="toc-number">2.3.</span> <span class="toc-text">3. Docker Hub与远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Docker%E8%BF%90%E8%A1%8CPostgreSQL"><span class="toc-number">2.4.</span> <span class="toc-text">4. Docker运行PostgreSQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Docker%E8%BF%90%E8%A1%8CRedis"><span class="toc-number">2.5.</span> <span class="toc-text">5. Docker运行Redis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Docker%E5%AE%B9%E5%99%A8%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="toc-number">2.6.</span> <span class="toc-text">6. Docker容器配置参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF%E6%8F%AD%E7%A7%98"><span class="toc-number">3.</span> <span class="toc-text">三、数据库与缓存技术揭秘</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">3.1.</span> <span class="toc-text">1. 连接数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BA%94%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">2. 数据库应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Redis%E5%BA%94%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">3. Redis应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Node-js%E9%9B%86%E6%88%90Redis%E5%92%8Cpg"><span class="toc-number">3.4.</span> <span class="toc-text">4. Node.js集成Redis和pg</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AF%B9%E8%B1%A1%E5%85%B3%E7%B3%BB%E6%98%A0%E5%B0%84"><span class="toc-number">3.5.</span> <span class="toc-text">5. 对象关系映射</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">四、知识小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/" title="数据库与缓存技术简析"><img src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260519001447942.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据库与缓存技术简析"/></a><div class="content"><a class="title" href="/2026/04/27/%E6%95%B0%E6%8D%AE%E5%BA%93/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AF/" title="数据库与缓存技术简析">数据库与缓存技术简析</a><time datetime="2026-04-27T15:59:59.000Z" title="发表于 2026-04-27 23:59:59">2026-04-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/25/%E7%9F%A5%E8%AF%86/%E7%94%9F%E7%89%A9%E4%B8%96%E7%95%8C/" title="生物世界：从微观到宏观的生命奥秘"><img src="https://cdn.jsdelivr.net/gh/x-han7/my-blog-images/imgs/20260424113717639.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="生物世界：从微观到宏观的生命奥秘"/></a><div class="content"><a class="title" href="/2026/04/25/%E7%9F%A5%E8%AF%86/%E7%94%9F%E7%89%A9%E4%B8%96%E7%95%8C/" title="生物世界：从微观到宏观的生命奥秘">生物世界：从微观到宏观的生命奥秘</a><time datetime="2026-04-25T12:42:21.501Z" title="发表于 2026-04-25 20:42:21">2026-04-25</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 横杠一</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div><!-- ↓↓↓ 下面是你新增的一行（或多行）↓↓↓--><div class="my-extra-footer"><span>感谢与参考： </span><a href="https://meuicat.com/" target="_blank" rel="noopener external nofollow">爱吃肉的猫</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="/js/tw_cn.js?v=5.5.4"></script><div class="js-pjax"></div><script src="/js/meuicat.js"></script><script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script><script src="/js/hometop.js"></script><script src="/icat/random.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      false
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="请输入..." type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

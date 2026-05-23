@@ -80,22 +80,18 @@
   color: var(--icat-fontcolor) !important;
 } */
 
-#nav #nav-right .site-page i,
-#nav #nav-right .site-page .iconfont,
-#nav #nav-right .site-page .fa,
-#nav #nav-right .site-page .fas,
-#nav #nav-right .site-page .far,
-#nav #nav-right .site-page .fab {
+#nav #nav-right .site-page:not(#control_btn) i,
+#nav #nav-right .site-page:not(#control_btn) .iconfont,
+#nav #nav-right .site-page:not(#control_btn) .fa,
+#nav #nav-right .site-page:not(#control_btn) .fas,
+#nav #nav-right .site-page:not(#control_btn) .far,
+#nav #nav-right .site-page:not(#control_btn) .fab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: currentColor;
   font-size: 18px;
   line-height: 1;
-}
-
-#nav #console i {
-  background: currentColor;
 }
 
 #nav #nav-right .site-page:hover {
@@ -110,7 +106,7 @@
   color: var(--icat-fontcolor) !important;
 }
 
-#page-header:not(.nav-fixed) #nav.panel-open #console i {
+#page-header:not(.nav-fixed) #nav.panel-open #console .site-page:not(.hide):not(:hover) i {
   background: var(--icat-fontcolor);
 }
 
@@ -138,6 +134,7 @@
 #nav #nav-right #nav-totop.long .totopbtn i {
   opacity: 0;
   transform: translateY(-100%);
+  width: 100%;
 }
 
 #nav #nav-right #nav-totop .totopbtn #percent {
@@ -162,9 +159,17 @@
   transform: translateY(100%);
 }
 
-/* Added by AI: 让顶部菜单面板在 JS 切换 active 时真正接收鼠标事件 */
+/* Added by AI: 让顶部菜单面板只有真实内容区接收鼠标事件，避免全屏遮罩阻止移出关闭 */
 #site-menu.active {
+  pointer-events: none;
+}
+
+#site-menu.active > .clo_itme.active {
   pointer-events: auto;
+}
+
+#site-menu.closing > .clo_itme.active {
+  pointer-events: none;
 }
 
 /* Added by AI: 下拉面板始终使用浅色主题文字，避免首页顶部白字规则误伤面板内容 */
@@ -445,6 +450,229 @@
 [data-theme="dark"] #page-header #nav #menus .has-tip::after {
   background: rgba(247, 248, 250, 0.96) !important;
   color: #1f2328 !important;
+}
+
+/* Added by AI: 修复导航回顶按钮 hover 时箭头被隐藏的问题，保持百分比/箭头切换 */
+#nav #nav-right #nav-totop .totopbtn {
+  position: relative;
+  width: 35px !important;
+  height: 35px !important;
+  background: var(--icat-theme) !important;
+  color: #fff !important;
+  overflow: hidden;
+}
+
+#nav #nav-right #nav-totop .totopbtn i {
+  position: absolute !important;
+  inset: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: currentColor !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  opacity: 0 !important;
+  transform: translateY(100%) !important;
+  transition: transform 0.3s ease, opacity 0.3s ease !important;
+}
+
+#nav #nav-right #nav-totop .totopbtn:hover i,
+#nav #nav-right #nav-totop.long .totopbtn i {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+#nav #nav-right #nav-totop .totopbtn #percent {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  color: currentColor !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: transform 0.3s ease, opacity 0.3s ease !important;
+}
+
+#nav #nav-right #nav-totop .totopbtn:hover #percent,
+#nav #nav-right #nav-totop.long .totopbtn #percent {
+  opacity: 0 !important;
+  transform: translateY(-100%) !important;
+}
+
+#nav #nav-right #nav-totop .totopbtn:hover::after {
+  content: "回到顶部" !important;
+}
+
+/* Added by AI: 显式恢复中控台图标的四格/叉号动画，避免右侧图标统一规则误伤 */
+#nav #console #control_btn {
+  overflow: hidden;
+}
+
+#nav #console #control_btn label {
+  position: relative;
+  display: block;
+  width: 17px;
+  height: 17px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#nav #console #control_btn label i {
+  position: absolute;
+  display: block;
+  width: calc(50% - 1px);
+  height: calc(100% - 1px);
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform 0.35s ease, background 0.35s ease, width 0.2s ease, height 0.2s ease;
+}
+
+#nav #console #control_btn .upper_left {
+  top: 0;
+  left: 0;
+  transform: translateY(-38%);
+}
+
+#nav #console #control_btn .upper_right {
+  top: 0;
+  right: 0;
+  transform: translateY(-62%);
+}
+
+#nav #console #control_btn .below_left {
+  bottom: 0;
+  left: 0;
+  transform: translateY(62%);
+}
+
+#nav #console #control_btn .below_right {
+  right: 0;
+  bottom: 0;
+  transform: translateY(38%);
+}
+
+#nav #console #control_btn:hover .upper_left {
+  transform: translateY(-62%);
+}
+
+#nav #console #control_btn:hover .upper_right {
+  transform: translateY(-38%);
+}
+
+#nav #console #control_btn:hover .below_left {
+  transform: translateY(38%);
+}
+
+#nav #console #control_btn:hover .below_right {
+  transform: translateY(62%);
+}
+
+#nav #console #control_btn.hide {
+  background: var(--icat-theme);
+  color: #fff !important;
+}
+
+#nav #console #control_btn.hide .upper_left,
+#nav #console #control_btn.hide .below_right {
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+}
+
+#nav #console #control_btn.hide .upper_left {
+  transform-origin: right bottom;
+  transform: translateY(0) rotate(45deg);
+}
+
+#nav #console #control_btn.hide .below_right {
+  transform-origin: left bottom;
+  transform: translateY(0) rotate(-45deg);
+}
+
+#nav #console #control_btn.hide .upper_right,
+#nav #console #control_btn.hide .below_left {
+  background: transparent;
+}
+
+/* Added by AI: 让首页轮播标题和描述按参考站卡片方式显示，并兼容深浅色模式 */
+#home-banner .carousel-section .swiper-slide::before {
+  background: var(--icat-card-bg);
+  mask: linear-gradient(0, #000 14%, transparent 34%);
+}
+
+#home-banner .carousel-section .carousel-item {
+  position: relative;
+  display: block;
+  color: var(--icat-fontcolor);
+}
+
+#home-banner .carousel-section .carousel-info {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 30px;
+  left: 1.25rem;
+  z-index: 2;
+  max-width: calc(100% - 7rem);
+  color: var(--icat-fontcolor);
+  pointer-events: none;
+}
+
+#home-banner .carousel-section .carousel-title {
+  overflow: hidden;
+  color: var(--icat-fontcolor);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+#home-banner .carousel-section .carousel-desc {
+  display: none;
+}
+
+#home-banner .carousel-section .swiper-slide:hover .carousel-title {
+  color: var(--icat-theme);
+}
+
+[data-theme="dark"] #home-banner .carousel-section .carousel-info,
+[data-theme="dark"] #home-banner .carousel-section .carousel-title {
+  color: var(--icat-fontcolor);
+}
+
+/* Added by AI: Lenis 滑动阻尼运行态，避免原生 smooth scroll 与阻尼动画叠加 */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+@media screen and (max-width: 768px) {
+  #home-banner .carousel-section .carousel-info {
+    right: 1rem;
+    bottom: 28px;
+    left: 1rem;
+    max-width: calc(100% - 4rem);
+  }
+
+  #home-banner .carousel-section .carousel-title {
+    font-size: 16px;
+  }
 }
 
 /* Added by AI: 标签页样式 */
@@ -1197,4 +1425,679 @@
   background-color: var(--cat-main);
   color: #ffffff;
   opacity: 0.9;
+}
+
+/* Added by AI: 分类页与标签页质感重设计，使用页面专属变量并兼容 Butterfly 深浅色模式 */
+#page .page-title:has(+ .taxonomy-page) {
+  display: none;
+}
+
+#page:has(.taxonomy-page) {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.taxonomy-page {
+  --tax-page-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(247, 249, 254, 0.68));
+  --tax-card-bg: rgba(255, 255, 255, 0.86);
+  --tax-card-solid: #fff;
+  --tax-text: #1f2937;
+  --tax-muted: #667085;
+  --tax-faint: #98a2b3;
+  --tax-border-base: rgba(66, 90, 239, 0.12);
+  --tax-border-strong: rgba(66, 90, 239, 0.2);
+  --tax-shadow: 0 16px 42px rgba(31, 41, 55, 0.08);
+  --tax-shadow-hover: 0 24px 56px rgba(31, 41, 55, 0.12);
+  --tax-radius-lg: 18px;
+  --tax-radius-md: 12px;
+  --tax-accent: var(--icat-theme);
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2rem 1.1rem 3rem;
+  color: var(--tax-text);
+}
+
+[data-theme="dark"] .taxonomy-page {
+  --tax-page-bg: linear-gradient(180deg, rgba(27, 28, 32, 0.88), rgba(24, 23, 29, 0.68));
+  --tax-card-bg: rgba(27, 28, 32, 0.88);
+  --tax-card-solid: #1b1c20;
+  --tax-text: #f7f7fa;
+  --tax-muted: #b9bbca;
+  --tax-faint: #85889a;
+  --tax-border-base: rgba(255, 149, 62, 0.18);
+  --tax-border-strong: rgba(255, 149, 62, 0.3);
+  --tax-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+  --tax-shadow-hover: 0 26px 64px rgba(0, 0, 0, 0.38);
+}
+
+.taxonomy-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+  padding: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--tax-border-base);
+  border-radius: var(--tax-radius-lg);
+  background:
+    radial-gradient(circle at 8% 20%, var(--icat-theme-op), transparent 32%),
+    radial-gradient(circle at 92% 8%, rgba(20, 184, 166, 0.13), transparent 28%),
+    var(--tax-page-bg);
+  box-shadow: var(--tax-shadow);
+}
+
+[data-theme="dark"] .taxonomy-hero {
+  background:
+    radial-gradient(circle at 8% 20%, rgba(255, 149, 62, 0.14), transparent 34%),
+    radial-gradient(circle at 92% 8%, rgba(59, 130, 246, 0.12), transparent 30%),
+    var(--tax-page-bg);
+}
+
+.taxonomy-hero::after {
+  position: absolute;
+  right: -80px;
+  bottom: -120px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid var(--tax-border-strong);
+  border-radius: 50%;
+  content: "";
+  opacity: 0.6;
+}
+
+.taxonomy-hero-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.taxonomy-eyebrow,
+.taxonomy-section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  color: var(--tax-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.taxonomy-eyebrow {
+  margin-bottom: 0.7rem;
+  padding: 0.34rem 0.65rem;
+  border: 1px solid var(--tax-border-strong);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+[data-theme="dark"] .taxonomy-eyebrow {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.taxonomy-title {
+  margin: 0;
+  color: var(--tax-text);
+  font-size: 2.35rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.taxonomy-subtitle {
+  max-width: 36em;
+  margin: 0.75rem 0 0;
+  color: var(--tax-muted);
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+.taxonomy-stats-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.taxonomy-stat,
+.taxonomy-panel,
+.taxonomy-card,
+.taxonomy-group-card {
+  border: 1px solid var(--tax-border-base);
+  background: var(--tax-card-bg);
+  box-shadow: var(--tax-shadow);
+  backdrop-filter: blur(16px);
+}
+
+.taxonomy-stat {
+  min-width: 0;
+  padding: 1rem;
+  border-radius: 14px;
+}
+
+.taxonomy-stat-label,
+.taxonomy-stat-note,
+.taxonomy-mini-stat span,
+.taxonomy-latest-label {
+  color: var(--tax-faint);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.taxonomy-stat-value {
+  display: block;
+  overflow: hidden;
+  margin-top: 0.18rem;
+  color: var(--tax-text);
+  font-size: 1.45rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taxonomy-stat-note {
+  display: block;
+  margin-top: 0.18rem;
+}
+
+.taxonomy-insight {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+  gap: 1rem;
+  margin-bottom: 1.35rem;
+}
+
+.taxonomy-panel {
+  min-width: 0;
+  padding: 1.15rem;
+  border-radius: var(--tax-radius-lg);
+}
+
+.taxonomy-section-title {
+  margin: 0.38rem 0 0;
+  color: var(--tax-text);
+  font-size: 1.18rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.taxonomy-section-desc {
+  margin: 0.55rem 0 0;
+  color: var(--tax-muted);
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.taxonomy-section-desc strong {
+  color: var(--tax-accent);
+}
+
+.taxonomy-rank-list {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+
+.taxonomy-rank-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+  padding: 0.66rem 0.74rem;
+  border: 1px solid var(--tax-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tax-soft) 72%, var(--tax-card-solid));
+  color: var(--tax-text);
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.taxonomy-rank-item:hover {
+  border-color: var(--tax-main);
+  color: var(--tax-text);
+  box-shadow: 0 10px 28px rgba(31, 41, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .taxonomy-rank-item {
+  background: color-mix(in srgb, var(--tax-main) 12%, var(--tax-card-solid));
+}
+
+.taxonomy-rank-index {
+  color: var(--tax-main);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.taxonomy-rank-name {
+  overflow: hidden;
+  color: var(--tax-text);
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taxonomy-rank-count {
+  color: var(--tax-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.taxonomy-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 1.45rem 0 0.85rem;
+}
+
+.taxonomy-section-head .taxonomy-section-title {
+  width: 100%;
+}
+
+.taxonomy-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.taxonomy-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 238px;
+  padding: 1.05rem;
+  overflow: hidden;
+  border-radius: var(--tax-radius-lg);
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.taxonomy-card::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--tax-main), color-mix(in srgb, var(--tax-main), #fff 45%));
+  content: "";
+}
+
+.taxonomy-card:hover {
+  border-color: color-mix(in srgb, var(--tax-main), var(--tax-border-base) 20%);
+  box-shadow: var(--tax-shadow-hover);
+  transform: translateY(-4px);
+}
+
+.taxonomy-card-top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.taxonomy-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--tax-border);
+  border-radius: 13px;
+  background: var(--tax-soft);
+  color: var(--tax-main);
+  font-size: 1.1rem;
+  flex: 0 0 auto;
+}
+
+[data-theme="dark"] .taxonomy-icon {
+  background: color-mix(in srgb, var(--tax-main) 15%, transparent);
+}
+
+.taxonomy-card-heading {
+  min-width: 0;
+}
+
+.taxonomy-card-title {
+  display: block;
+  overflow: hidden;
+  color: var(--tax-text);
+  font-size: 1.06rem;
+  font-weight: 800;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taxonomy-card-title:hover,
+.taxonomy-latest-link:hover,
+.taxonomy-group-link:hover {
+  color: var(--tax-main);
+}
+
+.taxonomy-card-desc {
+  display: -webkit-box;
+  min-height: 3.3em;
+  margin: 0.38rem 0 0;
+  overflow: hidden;
+  color: var(--tax-muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.taxonomy-card-action,
+.taxonomy-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--tax-border-base);
+  border-radius: 10px;
+  background: var(--tax-card-solid);
+  color: var(--tax-muted);
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+
+.taxonomy-card-action {
+  width: 34px;
+  height: 34px;
+}
+
+.taxonomy-card-action:hover,
+.taxonomy-icon-button:hover {
+  border-color: var(--tax-main);
+  background: var(--tax-main);
+  color: #fff;
+}
+
+.taxonomy-meter {
+  height: 7px;
+  margin: 1.05rem 0 0.85rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tax-border) 42%, transparent);
+}
+
+.taxonomy-meter span {
+  display: block;
+  width: var(--tax-ratio);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--tax-main), color-mix(in srgb, var(--tax-main), #fff 35%));
+}
+
+.taxonomy-card-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-bottom: 0.95rem;
+}
+
+.taxonomy-mini-stat {
+  padding: 0.62rem;
+  border: 1px solid var(--tax-border-base);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tax-card-solid) 78%, var(--tax-soft));
+}
+
+[data-theme="dark"] .taxonomy-mini-stat {
+  background: color-mix(in srgb, var(--tax-card-solid) 86%, var(--tax-main));
+}
+
+.taxonomy-mini-stat strong {
+  display: block;
+  margin-top: 0.14rem;
+  color: var(--tax-text);
+  font-size: 0.95rem;
+}
+
+.taxonomy-latest {
+  margin-top: auto;
+  padding-top: 0.88rem;
+  border-top: 1px dashed var(--tax-border-base);
+}
+
+.taxonomy-latest-link {
+  display: grid;
+  gap: 0.24rem;
+  margin-top: 0.38rem;
+  color: var(--tax-text);
+  text-decoration: none;
+}
+
+.taxonomy-latest-link span {
+  overflow: hidden;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taxonomy-latest-link time,
+.taxonomy-latest-empty {
+  color: var(--tax-muted);
+  font-size: 0.76rem;
+}
+
+.taxonomy-tags-head {
+  align-items: center;
+}
+
+.taxonomy-tags-head .taxonomy-section-title {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+.taxonomy-icon-button {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+
+.taxonomy-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.72rem;
+  margin-bottom: 1.35rem;
+  padding: 1rem;
+  border: 1px solid var(--tax-border-base);
+  border-radius: var(--tax-radius-lg);
+  background: var(--tax-card-bg);
+  box-shadow: var(--tax-shadow);
+}
+
+.taxonomy-tag-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 42px;
+  padding: 0.52rem 0.76rem;
+  overflow: hidden;
+  border: 1px solid var(--tax-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tax-soft) 78%, #fff);
+  color: var(--tax-main);
+  font-size: var(--tag-size);
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-theme="dark"] .taxonomy-tag-pill {
+  background: color-mix(in srgb, var(--tax-main) 12%, var(--tax-card-solid));
+}
+
+.taxonomy-tag-pill::after {
+  position: absolute;
+  right: 8px;
+  bottom: 5px;
+  left: 8px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--tax-main) var(--tax-ratio), transparent var(--tax-ratio));
+  content: "";
+  opacity: 0.34;
+}
+
+.taxonomy-tag-pill:hover {
+  border-color: var(--tax-main);
+  color: var(--tax-main);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--tax-main) 18%, transparent);
+  transform: translateY(-3px);
+}
+
+.taxonomy-tag-count,
+.taxonomy-group-link b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding: 0 0.42rem;
+  border-radius: 999px;
+  background: var(--tax-main);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.taxonomy-tag-insight {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.92fr);
+}
+
+.taxonomy-group-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.taxonomy-group-card {
+  min-width: 0;
+  padding: 1rem;
+  border-radius: var(--tax-radius-lg);
+}
+
+.taxonomy-group-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--tax-text);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.taxonomy-group-title i {
+  color: var(--tax-accent);
+}
+
+.taxonomy-group-list {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+.taxonomy-group-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.58rem 0.68rem;
+  border: 1px solid var(--tax-border);
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--tax-soft) 74%, var(--tax-card-solid));
+  color: var(--tax-text);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .taxonomy-group-link {
+  background: color-mix(in srgb, var(--tax-main) 10%, var(--tax-card-solid));
+}
+
+.taxonomy-group-link span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taxonomy-empty {
+  color: var(--tax-muted);
+  font-size: 0.9rem;
+}
+
+@media screen and (max-width: 992px) {
+  .taxonomy-hero,
+  .taxonomy-insight,
+  .taxonomy-tag-insight {
+    grid-template-columns: 1fr;
+  }
+
+  .taxonomy-card-grid,
+  .taxonomy-group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .taxonomy-page {
+    padding: 1.1rem 0.45rem 2.2rem;
+  }
+
+  .taxonomy-hero {
+    padding: 1.05rem;
+    border-radius: 15px;
+  }
+
+  .taxonomy-title {
+    font-size: 1.8rem;
+  }
+
+  .taxonomy-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .taxonomy-stats-grid,
+  .taxonomy-card-grid,
+  .taxonomy-group-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .taxonomy-card {
+    min-height: 0;
+  }
+
+  .taxonomy-stat-value {
+    font-size: 1.25rem;
+  }
+
+  .taxonomy-card-top {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .taxonomy-card-action {
+    display: none;
+  }
+
+  .taxonomy-tag-cloud {
+    gap: 0.55rem;
+    padding: 0.75rem;
+  }
+
+  .taxonomy-tag-pill {
+    min-height: 38px;
+    max-width: 100%;
+    font-size: 0.95rem !important;
+  }
 }
