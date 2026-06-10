@@ -7205,7 +7205,7 @@ figure.highlight pre .javascript .function {
   -o-box-align: center;
   -ms-flex-align: center;
   -webkit-align-items: center;
-  align-items: center;
+  align-items: flex-start;
   font-weight: bold;
   color: var(--icat-titlecolor) !important;
 }

@@ -474,3 +474,529 @@
     padding: 0.95rem 0.9rem 0.85rem;
   }
 }
+
+/* Added by AI: 修正语雀导出结构的折叠框、内联颜色和列表圆点细节 */
+#post.md-style-yuque #article-container {
+  --md-strong-text: #151b2d;
+  --md-hover-bg: rgba(47, 111, 237, 0.08);
+  --md-collapse-head: #f7faff;
+  --md-collapse-open-head: #f2f6ff;
+  --md-collapse-border: #dce7fb;
+  --md-code-text: #2f3a4f;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container {
+  --md-strong-text: #f2f6ff;
+  --md-hover-bg: rgba(127, 176, 255, 0.18);
+  --md-collapse-head: #202838;
+  --md-collapse-open-head: #253047;
+  --md-collapse-border: #35445f;
+  --md-code-text: #d8e4f6;
+}
+
+#post.md-style-yuque #article-container a:not([data-fancybox]):hover,
+#post.md-style-yuque #article-container a:not([data-fancybox]):focus-visible {
+  border-radius: 4px;
+  background: var(--md-hover-bg) !important;
+  color: var(--md-main-strong) !important;
+  text-decoration-color: var(--md-main) !important;
+}
+
+#post.md-style-yuque #article-container a:not([data-fancybox]):hover *,
+#post.md-style-yuque #article-container a:not([data-fancybox]):focus-visible * {
+  color: var(--md-main-strong) !important;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container a:not([data-fancybox]),
+[data-theme="dark"] #post.md-style-yuque #article-container a:not([data-fancybox]) * {
+  color: var(--md-main-strong) !important;
+}
+
+#post.md-style-yuque #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) strong,
+#post.md-style-yuque #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) strong * {
+  color: var(--md-strong-text) !important;
+  font-weight: 760;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) :is(font, span.ne-text) {
+  color: inherit !important;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse {
+  margin: 0.85rem 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--md-collapse-border);
+  border-radius: 10px;
+  background: var(--md-surface);
+  box-shadow: none;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse:hover {
+  border-color: color-mix(in srgb, var(--md-main) 38%, var(--md-collapse-border));
+}
+
+#post.md-style-yuque #article-container details.lake-collapse summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-width: 0;
+  min-height: 2.65rem;
+  padding: 0.66rem 0.9rem;
+  border-radius: 9px;
+  background: var(--md-collapse-head);
+  color: var(--md-text);
+  font-weight: 700;
+  line-height: 1.55;
+  list-style: none;
+  cursor: pointer;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse[open] summary {
+  border-bottom: 1px solid var(--md-collapse-border);
+  border-radius: 9px 9px 0 0;
+  background: var(--md-collapse-open-head);
+}
+
+#post.md-style-yuque #article-container details.lake-collapse summary::-webkit-details-marker {
+  display: none;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse summary::before {
+  width: 0.54rem;
+  height: 0.54rem;
+  margin-top: 0.48rem;
+  border-right: 2px solid var(--md-main);
+  border-bottom: 2px solid var(--md-main);
+  content: "";
+  flex: 0 0 auto;
+  transform: rotate(-45deg);
+  transition: transform 0.2s ease;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse[open] summary::before {
+  transform: rotate(45deg);
+}
+
+#post.md-style-yuque #article-container details.lake-collapse summary .ne-text {
+  min-width: 0;
+  color: inherit !important;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse > :not(summary) {
+  margin: 0.68rem 1rem;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse > :last-child {
+  margin-bottom: 0.88rem;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse :is(p, ul, ol, blockquote, table, pre, .ne-quote) {
+  max-width: 100%;
+}
+
+#post.md-style-yuque #article-container details.lake-collapse p {
+  line-height: 1.82;
+}
+
+#post.md-style-yuque #article-container ul.ne-list-wrap {
+  margin: 0.48rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+#post.md-style-yuque #article-container ul.ne-list-wrap > ul.ne-ul {
+  margin: 0.32rem 0;
+  padding-left: 1.45rem;
+}
+
+#post.md-style-yuque #article-container ul.ne-ul,
+#post.md-style-yuque #article-container ul:not(.ne-list-wrap) {
+  list-style-type: disc;
+}
+
+#post.md-style-yuque #article-container ul.ne-ul[ne-level="1"],
+#post.md-style-yuque #article-container ul ul {
+  list-style-type: circle;
+}
+
+#post.md-style-yuque #article-container ul.ne-ul[ne-level="2"],
+#post.md-style-yuque #article-container ul ul ul {
+  list-style-type: square;
+}
+
+#post.md-style-yuque #article-container :is(ul.ne-ul, ul:not(.ne-list-wrap)) > li {
+  list-style-position: outside;
+}
+
+#post.md-style-yuque #article-container :is(ul.ne-ul, ol.ne-ol) > li::marker {
+  color: var(--md-main);
+  font-size: 0.92em;
+}
+
+#post.md-style-yuque #article-container pre.ne-codeblock {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.95rem 1rem;
+  color: var(--md-code-text);
+  white-space: pre;
+}
+
+#post.md-style-yuque #article-container pre.ne-codeblock code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  color: var(--md-code-text);
+  white-space: pre;
+}
+
+#post.md-style-yuque #article-container .ne-quote {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--md-border);
+  border-left: 4px solid var(--md-main);
+  border-radius: 10px;
+  background: var(--md-quote-bg);
+  color: var(--md-text);
+}
+
+#post.md-style-yuque #article-container .ne-quote > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-yuque #article-container .ne-quote > :last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+  #post.md-style-yuque #article-container details.lake-collapse summary {
+    padding: 0.62rem 0.76rem;
+    font-size: 0.94rem;
+  }
+
+  #post.md-style-yuque #article-container details.lake-collapse > :not(summary) {
+    margin-right: 0.78rem;
+    margin-left: 0.78rem;
+  }
+}
+
+/* Added by AI: 重做语雀风格代码块，形成接近文档编辑器的工具栏、行号区和柔和卡片层次 */
+#post.md-style-yuque #article-container {
+  --md-code-shell: #ffffff;
+  --md-code-toolbar: #f7fbff;
+  --md-code-toolbar-strong: #1f5fe0;
+  --md-code-border: #dce7fb;
+  --md-code-gutter-bg: #f8fbff;
+  --md-code-gutter-text: #7f8ca1;
+  --md-code-line-hover: #f4f8ff;
+  --md-code-line-marked: rgba(47, 111, 237, 0.1);
+  --md-code-text-strong: #2f3a4f;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container {
+  --md-code-shell: #1b2230;
+  --md-code-toolbar: #202838;
+  --md-code-toolbar-strong: #a6c8ff;
+  --md-code-border: #35445f;
+  --md-code-gutter-bg: #1f2740;
+  --md-code-gutter-text: #aab7ca;
+  --md-code-line-hover: #202b41;
+  --md-code-line-marked: rgba(127, 176, 255, 0.15);
+  --md-code-text-strong: #d8e4f6;
+}
+
+#post.md-style-yuque #article-container :is(pre, figure.highlight) {
+  margin: 1.1rem 0;
+  border: 1px solid var(--md-code-border);
+  border-radius: 14px;
+  background: var(--md-code-shell);
+  box-shadow: 0 16px 34px rgba(47, 111, 237, 0.06);
+  overflow: hidden;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container :is(pre, figure.highlight) {
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+}
+
+#post.md-style-yuque #article-container figure.highlight {
+  overflow: hidden;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.45rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--md-code-border);
+  background: linear-gradient(180deg, var(--md-code-toolbar), var(--md-code-shell));
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.82rem;
+  overflow: hidden;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools .macStyle {
+  display: none !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools > * {
+  padding: 0;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools .expand {
+  flex: 0 0 auto;
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools .code-lang {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-right: auto;
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools .copy-button,
+#post.md-style-yuque #article-container figure.highlight .highlight-tools .fullpage-button {
+  flex: 0 0 auto;
+  width: 1.6rem;
+  color: var(--md-code-toolbar-strong);
+  text-align: center;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools i:hover {
+  color: var(--md-main);
+  background: var(--md-hover-bg);
+  border-radius: 5px;
+}
+
+#post.md-style-yuque #article-container figure.highlight table {
+  display: block;
+  width: 100%;
+  border: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#post.md-style-yuque #article-container figure.highlight table td {
+  border: 0;
+  vertical-align: top;
+}
+
+#post.md-style-yuque #article-container figure.highlight .gutter {
+  width: 3.6rem;
+  background: var(--md-code-gutter-bg);
+  border-right: 1px solid var(--md-code-border);
+  user-select: none;
+}
+
+#post.md-style-yuque #article-container figure.highlight .gutter pre {
+  margin: 0;
+  padding: 1rem 0.7rem 1rem 0.55rem;
+  background: transparent;
+  color: var(--md-code-gutter-text);
+  text-align: right;
+  line-height: 1.74;
+  font-size: 0.84rem;
+  font-variant-numeric: tabular-nums;
+}
+
+#post.md-style-yuque #article-container figure.highlight .gutter pre .line {
+  display: block;
+}
+
+#post.md-style-yuque #article-container figure.highlight .code {
+  background: var(--md-code-shell);
+}
+
+#post.md-style-yuque #article-container figure.highlight .code pre {
+  margin: 0;
+  padding: 1rem 1.05rem;
+  background: transparent;
+  color: var(--md-code-text-strong);
+  line-height: 1.74;
+}
+
+#post.md-style-yuque #article-container figure.highlight .code pre code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  background: transparent;
+  color: inherit;
+  white-space: pre;
+}
+
+#post.md-style-yuque #article-container figure.highlight .line {
+  display: block;
+  min-height: 1.74em;
+}
+
+#post.md-style-yuque #article-container figure.highlight .line.marked {
+  background: var(--md-code-line-marked);
+}
+
+#post.md-style-yuque #article-container figure.highlight tbody tr:hover td {
+  background: var(--md-code-line-hover);
+}
+
+#post.md-style-yuque #article-container figure.highlight .code-expand-btn {
+  margin: 0;
+  padding: 0.42rem 0;
+  border-top: 1px solid var(--md-code-border);
+  background: linear-gradient(180deg, var(--md-code-toolbar), var(--md-code-shell));
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+#post.md-style-yuque #article-container figure.highlight .code-expand-btn:hover {
+  background: var(--md-hover-bg);
+  color: var(--md-main);
+}
+
+#post.md-style-yuque #article-container figure.highlight .code-expand-btn i {
+  padding: 0;
+  animation: none;
+}
+
+#post.md-style-yuque #article-container pre.ne-codeblock {
+  position: relative;
+  margin: 1.05rem 0;
+  padding: 2.25rem 1.05rem 1rem;
+  border: 1px solid var(--md-code-border);
+  border-radius: 12px;
+  background: var(--md-code-shell);
+  color: var(--md-code-text-strong);
+  box-shadow: 0 12px 28px rgba(47, 111, 237, 0.05);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+[data-theme="dark"] #post.md-style-yuque #article-container pre.ne-codeblock {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+#post.md-style-yuque #article-container pre.ne-codeblock::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2.05rem;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid var(--md-code-border);
+  background: linear-gradient(180deg, var(--md-code-toolbar), var(--md-code-shell));
+  color: var(--md-code-toolbar-strong);
+  content: attr(data-language);
+  display: flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#post.md-style-yuque #article-container pre.ne-codeblock code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  color: inherit;
+  white-space: pre;
+}
+
+/* Added by AI: 修正代码块内部重复外框，并恢复工具栏折叠与高度收起 */
+#post.md-style-yuque #article-container figure.highlight > :is(table, pre),
+#post.md-style-yuque #article-container figure.highlight :is(.gutter pre, .code pre) {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight :is(.gutter pre, .code pre) {
+  overflow: visible;
+}
+
+#post.md-style-yuque #article-container figure.highlight table {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight table td {
+  border: 0 !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools.closed {
+  border-bottom: 0;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools.closed ~ * {
+  display: none !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools.closed .expand {
+  transform: rotate(-90deg);
+}
+
+#post.md-style-yuque #article-container figure.highlight .code-expand-btn {
+  position: static;
+  bottom: auto;
+  z-index: auto;
+  width: 100%;
+}
+
+/* Added by AI: 取消代码块内部 pre/table 的二次外框，并恢复工具栏折叠行为 */
+#post.md-style-yuque #article-container figure.highlight > :is(table, pre),
+#post.md-style-yuque #article-container figure.highlight :is(.gutter pre, .code pre) {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight :is(.gutter pre, .code pre) {
+  overflow: visible;
+}
+
+#post.md-style-yuque #article-container figure.highlight table {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight table td {
+  border: 0 !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools.closed {
+  border-bottom: 0;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools.closed ~ * {
+  display: none !important;
+}
+
+#post.md-style-yuque #article-container figure.highlight .highlight-tools.closed .expand {
+  transform: rotate(-90deg);
+}
+
+#post.md-style-yuque #article-container figure.highlight .code-expand-btn {
+  position: static;
+  bottom: auto;
+  z-index: auto;
+  width: 100%;
+}

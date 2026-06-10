@@ -395,6 +395,194 @@
   margin-top: 0.72rem;
 }
 
+/* Added by AI: 兼容语雀导出的 details / ne-* 结构，修正折叠框、内联颜色和列表圆点 */
+#post.md-style-notion #article-container {
+  --md-strong-text: #1f2937;
+  --md-hover-bg: rgba(55, 53, 47, 0.08);
+  --md-collapse-head: #f5f4f1;
+  --md-collapse-open-head: #efeee9;
+  --md-collapse-border: #e2dfd8;
+  --md-code-text: #37352f;
+}
+
+[data-theme="dark"] #post.md-style-notion #article-container {
+  --md-strong-text: #f4efe5;
+  --md-hover-bg: rgba(232, 227, 216, 0.14);
+  --md-collapse-head: #272727;
+  --md-collapse-open-head: #2d2d2d;
+  --md-collapse-border: #383838;
+  --md-code-text: #e8e3d8;
+}
+
+#post.md-style-notion #article-container a:not([data-fancybox]):hover,
+#post.md-style-notion #article-container a:not([data-fancybox]):focus-visible {
+  border-radius: 4px;
+  background: var(--md-hover-bg) !important;
+  color: var(--md-main-strong) !important;
+  text-decoration-color: var(--md-main-strong) !important;
+}
+
+#post.md-style-notion #article-container a:not([data-fancybox]):hover *,
+#post.md-style-notion #article-container a:not([data-fancybox]):focus-visible * {
+  color: var(--md-main-strong) !important;
+}
+
+#post.md-style-notion #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) strong,
+#post.md-style-notion #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) strong * {
+  color: var(--md-strong-text) !important;
+  font-weight: 760;
+}
+
+[data-theme="dark"] #post.md-style-notion #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) :is(font, span.ne-text) {
+  color: inherit !important;
+}
+
+#post.md-style-notion #article-container details.lake-collapse {
+  margin: 0.88rem 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--md-collapse-border);
+  border-radius: 8px;
+  background: var(--md-surface);
+  box-shadow: none;
+}
+
+#post.md-style-notion #article-container details.lake-collapse:hover {
+  border-color: color-mix(in srgb, var(--md-main) 24%, var(--md-collapse-border));
+}
+
+#post.md-style-notion #article-container details.lake-collapse summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  min-width: 0;
+  min-height: 2.45rem;
+  padding: 0.6rem 0.84rem;
+  border-radius: 7px;
+  background: var(--md-collapse-head);
+  color: var(--md-text);
+  font-weight: 720;
+  line-height: 1.55;
+  list-style: none;
+  cursor: pointer;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+#post.md-style-notion #article-container details.lake-collapse summary:hover {
+  background: var(--md-hover-bg);
+}
+
+#post.md-style-notion #article-container details.lake-collapse[open] summary {
+  border-bottom: 1px solid var(--md-collapse-border);
+  border-radius: 7px 7px 0 0;
+  background: var(--md-collapse-open-head);
+}
+
+#post.md-style-notion #article-container details.lake-collapse summary::-webkit-details-marker {
+  display: none;
+}
+
+#post.md-style-notion #article-container details.lake-collapse summary::before {
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: 0.55rem;
+  border-radius: 4px;
+  background: var(--md-muted);
+  content: "";
+  flex: 0 0 auto;
+}
+
+#post.md-style-notion #article-container details.lake-collapse summary .ne-text {
+  min-width: 0;
+  color: inherit !important;
+}
+
+#post.md-style-notion #article-container details.lake-collapse > :not(summary) {
+  margin: 0.58rem 0.88rem;
+}
+
+#post.md-style-notion #article-container details.lake-collapse > :last-child {
+  margin-bottom: 0.82rem;
+}
+
+#post.md-style-notion #article-container details.lake-collapse :is(p, ul, ol, blockquote, table, pre, .ne-quote) {
+  max-width: 100%;
+}
+
+#post.md-style-notion #article-container details.lake-collapse p {
+  line-height: 1.82;
+}
+
+#post.md-style-notion #article-container ul.ne-list-wrap {
+  margin: 0.45rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+#post.md-style-notion #article-container ul.ne-list-wrap > ul.ne-ul {
+  margin: 0.3rem 0;
+  padding-left: 1.3rem;
+}
+
+#post.md-style-notion #article-container ul.ne-ul,
+#post.md-style-notion #article-container ul:not(.ne-list-wrap) {
+  list-style-type: disc;
+}
+
+#post.md-style-notion #article-container ul.ne-ul[ne-level="1"],
+#post.md-style-notion #article-container ul ul {
+  list-style-type: circle;
+}
+
+#post.md-style-notion #article-container ul.ne-ul[ne-level="2"],
+#post.md-style-notion #article-container ul ul ul {
+  list-style-type: square;
+}
+
+#post.md-style-notion #article-container :is(ul.ne-ul, ol.ne-ol) > li {
+  list-style-position: outside;
+}
+
+#post.md-style-notion #article-container :is(ul.ne-ul, ol.ne-ol) > li::marker {
+  color: var(--md-muted);
+  font-size: 0.92em;
+}
+
+#post.md-style-notion #article-container pre.ne-codeblock {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.9rem 1rem;
+  color: var(--md-code-text);
+  white-space: pre;
+}
+
+#post.md-style-notion #article-container pre.ne-codeblock code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  color: var(--md-code-text);
+  white-space: pre;
+}
+
+#post.md-style-notion #article-container .ne-quote {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--md-border);
+  border-left: 4px solid var(--md-main-strong);
+  border-radius: 8px;
+  background: var(--md-surface-2);
+  color: var(--md-text);
+}
+
+#post.md-style-notion #article-container .ne-quote > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-notion #article-container .ne-quote > :last-child {
+  margin-bottom: 0;
+}
+
 @media screen and (max-width: 768px) {
   #post.md-style-notion #article-container {
     font-size: 15px;
@@ -432,4 +620,299 @@
     padding: 0.58rem 0.72rem;
     white-space: nowrap;
   }
+}
+
+/* Added by AI: 重做 Notion 风格代码块，弱化工具栏并形成浅灰大圆角文档块 */
+#post.md-style-notion #article-container {
+  --md-code-shell: #f7f6f3;
+  --md-code-toolbar: rgba(255, 255, 255, 0.88);
+  --md-code-toolbar-strong: #6f6f6b;
+  --md-code-border: transparent;
+  --md-code-gutter-bg: transparent;
+  --md-code-gutter-text: #9b9a97;
+  --md-code-line-hover: rgba(55, 53, 47, 0.055);
+  --md-code-line-marked: rgba(55, 53, 47, 0.08);
+  --md-code-text-strong: #37352f;
+}
+
+[data-theme="dark"] #post.md-style-notion #article-container {
+  --md-code-shell: #272727;
+  --md-code-toolbar: rgba(31, 31, 31, 0.9);
+  --md-code-toolbar-strong: #c7c1b8;
+  --md-code-border: transparent;
+  --md-code-gutter-bg: transparent;
+  --md-code-gutter-text: #8f8a82;
+  --md-code-line-hover: rgba(232, 227, 216, 0.055);
+  --md-code-line-marked: rgba(232, 227, 216, 0.09);
+  --md-code-text-strong: #e7e3da;
+}
+
+#post.md-style-notion #article-container :is(pre, figure.highlight) {
+  margin: 1.1rem 0;
+  border: 0;
+  border-radius: 9px;
+  background: var(--md-code-shell);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+#post.md-style-notion #article-container figure.highlight {
+  position: relative;
+  padding-top: 0.45rem;
+  overflow: hidden;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.45rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.22rem;
+  min-height: 1.9rem;
+  max-width: calc(100% - 1rem);
+  padding: 0 0.45rem;
+  border: 1px solid rgba(55, 53, 47, 0.1);
+  border-radius: 7px;
+  background: var(--md-code-toolbar);
+  color: var(--md-code-toolbar-strong);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+  font-size: 0.78rem;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] #post.md-style-notion #article-container figure.highlight .highlight-tools {
+  border-color: rgba(232, 227, 216, 0.12);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools .macStyle {
+  display: none !important;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools > * {
+  padding: 0;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools .expand {
+  flex: 0 0 auto;
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.72rem;
+  opacity: 0.75;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools .code-lang {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 8rem;
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools .copy-button,
+#post.md-style-notion #article-container figure.highlight .highlight-tools .fullpage-button {
+  flex: 0 0 auto;
+  width: 1.32rem;
+  color: var(--md-code-toolbar-strong);
+  text-align: center;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools i:hover {
+  color: var(--md-main-strong);
+  background: var(--md-hover-bg);
+  border-radius: 4px;
+}
+
+#post.md-style-notion #article-container figure.highlight table {
+  display: block;
+  width: 100%;
+  border: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#post.md-style-notion #article-container figure.highlight table td {
+  border: 0;
+  vertical-align: top;
+}
+
+#post.md-style-notion #article-container figure.highlight .gutter {
+  width: 2.8rem;
+  background: var(--md-code-gutter-bg);
+  user-select: none;
+}
+
+#post.md-style-notion #article-container figure.highlight .gutter pre {
+  margin: 0;
+  padding: 0.9rem 0.45rem 1rem 1rem;
+  background: transparent;
+  color: var(--md-code-gutter-text);
+  text-align: right;
+  line-height: 1.68;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+#post.md-style-notion #article-container figure.highlight .gutter pre .line {
+  display: block;
+}
+
+#post.md-style-notion #article-container figure.highlight .code {
+  background: transparent;
+}
+
+#post.md-style-notion #article-container figure.highlight .code pre {
+  margin: 0;
+  padding: 0.9rem 1.1rem 1.1rem 0.75rem;
+  background: transparent;
+  color: var(--md-code-text-strong);
+  line-height: 1.68;
+}
+
+#post.md-style-notion #article-container figure.highlight .code pre code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  background: transparent;
+  color: inherit;
+  white-space: pre;
+}
+
+#post.md-style-notion #article-container figure.highlight .line {
+  display: block;
+  min-height: 1.68em;
+}
+
+#post.md-style-notion #article-container figure.highlight .line.marked {
+  background: var(--md-code-line-marked);
+}
+
+#post.md-style-notion #article-container figure.highlight tbody tr:hover td {
+  background: var(--md-code-line-hover);
+}
+
+#post.md-style-notion #article-container figure.highlight .code-expand-btn {
+  margin: 0;
+  padding: 0.35rem 0;
+  border-top: 1px solid rgba(55, 53, 47, 0.08);
+  background: rgba(255, 255, 255, 0.34);
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.78rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+[data-theme="dark"] #post.md-style-notion #article-container figure.highlight .code-expand-btn {
+  border-top-color: rgba(232, 227, 216, 0.1);
+  background: rgba(31, 31, 31, 0.34);
+}
+
+#post.md-style-notion #article-container figure.highlight .code-expand-btn:hover {
+  background: var(--md-hover-bg);
+  color: var(--md-main-strong);
+}
+
+#post.md-style-notion #article-container figure.highlight .code-expand-btn i {
+  padding: 0;
+  animation: none;
+}
+
+#post.md-style-notion #article-container pre.ne-codeblock {
+  position: relative;
+  margin: 1.05rem 0;
+  padding: 2.55rem 1.1rem 1.05rem;
+  border: 0;
+  border-radius: 9px;
+  background: var(--md-code-shell);
+  color: var(--md-code-text-strong);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+#post.md-style-notion #article-container pre.ne-codeblock::before {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.5rem;
+  height: 1.7rem;
+  max-width: calc(100% - 1rem);
+  padding: 0 0.55rem;
+  border: 1px solid rgba(55, 53, 47, 0.1);
+  border-radius: 7px;
+  background: var(--md-code-toolbar);
+  color: var(--md-code-toolbar-strong);
+  content: attr(data-language);
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  backdrop-filter: blur(8px);
+}
+
+[data-theme="dark"] #post.md-style-notion #article-container pre.ne-codeblock::before {
+  border-color: rgba(232, 227, 216, 0.12);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+#post.md-style-notion #article-container pre.ne-codeblock code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  color: inherit;
+  white-space: pre;
+}
+
+/* Added by AI: 取消代码块内部 pre/table 的二次外框，并恢复工具栏折叠行为 */
+#post.md-style-notion #article-container figure.highlight > :is(table, pre),
+#post.md-style-notion #article-container figure.highlight :is(.gutter pre, .code pre) {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-notion #article-container figure.highlight :is(.gutter pre, .code pre) {
+  overflow: visible;
+}
+
+#post.md-style-notion #article-container figure.highlight table {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-notion #article-container figure.highlight table td {
+  border: 0 !important;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools.closed {
+  border-bottom: 0;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools.closed ~ * {
+  display: none !important;
+}
+
+#post.md-style-notion #article-container figure.highlight .highlight-tools.closed .expand {
+  transform: rotate(-90deg);
+}
+
+#post.md-style-notion #article-container figure.highlight .code-expand-btn {
+  position: static;
+  bottom: auto;
+  z-index: auto;
+  width: 100%;
 }

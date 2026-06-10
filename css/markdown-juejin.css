@@ -385,6 +385,194 @@
   margin-top: 0.75rem;
 }
 
+/* Added by AI: 兼容语雀导出的 details / ne-* 结构，修正折叠框、内联颜色和列表圆点 */
+#post.md-style-juejin #article-container {
+  --md-strong-text: #111827;
+  --md-hover-bg: rgba(30, 128, 255, 0.08);
+  --md-collapse-head: #f8fbff;
+  --md-collapse-open-head: #eef5ff;
+  --md-collapse-border: #dbe4f0;
+  --md-code-text: #1f2937;
+}
+
+[data-theme="dark"] #post.md-style-juejin #article-container {
+  --md-strong-text: #f3f7ff;
+  --md-hover-bg: rgba(90, 169, 255, 0.15);
+  --md-collapse-head: #202836;
+  --md-collapse-open-head: #273246;
+  --md-collapse-border: #344054;
+  --md-code-text: #d8e5f4;
+}
+
+#post.md-style-juejin #article-container a:not([data-fancybox]):hover,
+#post.md-style-juejin #article-container a:not([data-fancybox]):focus-visible {
+  border-radius: 4px;
+  background: var(--md-hover-bg) !important;
+  color: var(--md-main-strong) !important;
+  text-decoration-color: var(--md-main) !important;
+}
+
+#post.md-style-juejin #article-container a:not([data-fancybox]):hover *,
+#post.md-style-juejin #article-container a:not([data-fancybox]):focus-visible * {
+  color: var(--md-main-strong) !important;
+}
+
+#post.md-style-juejin #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) strong,
+#post.md-style-juejin #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) strong * {
+  color: var(--md-strong-text) !important;
+  font-weight: 800;
+}
+
+[data-theme="dark"] #post.md-style-juejin #article-container :is(p, li, blockquote, .note, details, td, th, h1, h2, h3, h4, h5, h6) :is(font, span.ne-text) {
+  color: inherit !important;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse {
+  margin: 0.9rem 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--md-collapse-border);
+  border-radius: 8px;
+  background: var(--md-surface);
+  box-shadow: var(--md-shadow);
+}
+
+#post.md-style-juejin #article-container details.lake-collapse:hover {
+  border-color: color-mix(in srgb, var(--md-main) 34%, var(--md-collapse-border));
+}
+
+#post.md-style-juejin #article-container details.lake-collapse summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.48rem;
+  min-width: 0;
+  min-height: 2.5rem;
+  padding: 0.64rem 0.85rem;
+  border-radius: 7px;
+  background: var(--md-collapse-head);
+  color: var(--md-text);
+  font-weight: 800;
+  line-height: 1.55;
+  list-style: none;
+  cursor: pointer;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse summary:hover {
+  background: var(--md-hover-bg);
+}
+
+#post.md-style-juejin #article-container details.lake-collapse[open] summary {
+  border-bottom: 1px solid var(--md-collapse-border);
+  border-radius: 7px 7px 0 0;
+  background: var(--md-collapse-open-head);
+}
+
+#post.md-style-juejin #article-container details.lake-collapse summary::-webkit-details-marker {
+  display: none;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse summary::before {
+  width: 0.46rem;
+  height: 0.46rem;
+  margin-top: 0.55rem;
+  border-radius: 999px;
+  background: var(--md-main);
+  content: "";
+  flex: 0 0 auto;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse summary .ne-text {
+  min-width: 0;
+  color: inherit !important;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse > :not(summary) {
+  margin: 0.6rem 0.9rem;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse > :last-child {
+  margin-bottom: 0.85rem;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse :is(p, ul, ol, blockquote, table, pre, .ne-quote) {
+  max-width: 100%;
+}
+
+#post.md-style-juejin #article-container details.lake-collapse p {
+  line-height: 1.82;
+}
+
+#post.md-style-juejin #article-container ul.ne-list-wrap {
+  margin: 0.45rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+#post.md-style-juejin #article-container ul.ne-list-wrap > ul.ne-ul {
+  margin: 0.3rem 0;
+  padding-left: 1.35rem;
+}
+
+#post.md-style-juejin #article-container ul.ne-ul,
+#post.md-style-juejin #article-container ul:not(.ne-list-wrap) {
+  list-style-type: disc;
+}
+
+#post.md-style-juejin #article-container ul.ne-ul[ne-level="1"],
+#post.md-style-juejin #article-container ul ul {
+  list-style-type: circle;
+}
+
+#post.md-style-juejin #article-container ul.ne-ul[ne-level="2"],
+#post.md-style-juejin #article-container ul ul ul {
+  list-style-type: square;
+}
+
+#post.md-style-juejin #article-container :is(ul.ne-ul, ol.ne-ol) > li {
+  list-style-position: outside;
+}
+
+#post.md-style-juejin #article-container :is(ul.ne-ul, ol.ne-ol) > li::marker {
+  color: var(--md-main);
+  font-size: 0.92em;
+}
+
+#post.md-style-juejin #article-container pre.ne-codeblock {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.9rem 1rem;
+  color: var(--md-code-text);
+  white-space: pre;
+}
+
+#post.md-style-juejin #article-container pre.ne-codeblock code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  color: var(--md-code-text);
+  white-space: pre;
+}
+
+#post.md-style-juejin #article-container .ne-quote {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--md-border);
+  border-left: 4px solid var(--md-main);
+  border-radius: 8px;
+  background: var(--md-surface-2);
+  color: var(--md-text);
+}
+
+#post.md-style-juejin #article-container .ne-quote > :first-child {
+  margin-top: 0;
+}
+
+#post.md-style-juejin #article-container .ne-quote > :last-child {
+  margin-bottom: 0;
+}
+
 @media screen and (max-width: 768px) {
   #post.md-style-juejin #article-container {
     font-size: 15px;
@@ -423,4 +611,278 @@
     padding: 0.68rem 0.8rem;
     white-space: nowrap;
   }
+}
+
+/* Added by AI: 重做掘金风格代码块，沿用语雀式编辑器结构并保留更鲜明的技术蓝 */
+#post.md-style-juejin #article-container {
+  --md-code-shell: #ffffff;
+  --md-code-toolbar: #f7fbff;
+  --md-code-toolbar-strong: #1e80ff;
+  --md-code-border: #dbe4f0;
+  --md-code-gutter-bg: #f8fbff;
+  --md-code-gutter-text: #8190a5;
+  --md-code-line-hover: #f4f8ff;
+  --md-code-line-marked: rgba(30, 128, 255, 0.1);
+  --md-code-text-strong: #1f2937;
+}
+
+[data-theme="dark"] #post.md-style-juejin #article-container {
+  --md-code-shell: #1b202b;
+  --md-code-toolbar: #202836;
+  --md-code-toolbar-strong: #8fc4ff;
+  --md-code-border: #344054;
+  --md-code-gutter-bg: #1d2430;
+  --md-code-gutter-text: #a9b5c6;
+  --md-code-line-hover: #243042;
+  --md-code-line-marked: rgba(90, 169, 255, 0.15);
+  --md-code-text-strong: #d8e5f4;
+}
+
+#post.md-style-juejin #article-container :is(pre, figure.highlight) {
+  margin: 1.1rem 0;
+  border: 1px solid var(--md-code-border);
+  border-radius: 10px;
+  background: var(--md-code-shell);
+  box-shadow: 0 14px 30px rgba(30, 128, 255, 0.06);
+  overflow: hidden;
+}
+
+[data-theme="dark"] #post.md-style-juejin #article-container :is(pre, figure.highlight) {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24);
+}
+
+#post.md-style-juejin #article-container figure.highlight {
+  overflow: hidden;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.4rem;
+  padding: 0 0.95rem;
+  border-bottom: 1px solid var(--md-code-border);
+  background: linear-gradient(180deg, var(--md-code-toolbar), var(--md-code-shell));
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.82rem;
+  overflow: hidden;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools .macStyle {
+  display: none !important;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools > * {
+  padding: 0;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools .expand {
+  flex: 0 0 auto;
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools .code-lang {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-right: auto;
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools .copy-button,
+#post.md-style-juejin #article-container figure.highlight .highlight-tools .fullpage-button {
+  flex: 0 0 auto;
+  width: 1.6rem;
+  color: var(--md-code-toolbar-strong);
+  text-align: center;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools i:hover {
+  color: var(--md-main);
+  background: var(--md-hover-bg);
+  border-radius: 5px;
+}
+
+#post.md-style-juejin #article-container figure.highlight table {
+  display: block;
+  width: 100%;
+  border: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#post.md-style-juejin #article-container figure.highlight table td {
+  border: 0;
+  vertical-align: top;
+}
+
+#post.md-style-juejin #article-container figure.highlight .gutter {
+  width: 3.55rem;
+  background: var(--md-code-gutter-bg);
+  border-right: 1px solid var(--md-code-border);
+  user-select: none;
+}
+
+#post.md-style-juejin #article-container figure.highlight .gutter pre {
+  margin: 0;
+  padding: 0.98rem 0.68rem 0.98rem 0.55rem;
+  background: transparent;
+  color: var(--md-code-gutter-text);
+  text-align: right;
+  line-height: 1.72;
+  font-size: 0.84rem;
+  font-variant-numeric: tabular-nums;
+}
+
+#post.md-style-juejin #article-container figure.highlight .gutter pre .line {
+  display: block;
+}
+
+#post.md-style-juejin #article-container figure.highlight .code {
+  background: var(--md-code-shell);
+}
+
+#post.md-style-juejin #article-container figure.highlight .code pre {
+  margin: 0;
+  padding: 0.98rem 1rem;
+  background: transparent;
+  color: var(--md-code-text-strong);
+  line-height: 1.72;
+}
+
+#post.md-style-juejin #article-container figure.highlight .code pre code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  background: transparent;
+  color: inherit;
+  white-space: pre;
+}
+
+#post.md-style-juejin #article-container figure.highlight .line {
+  display: block;
+  min-height: 1.72em;
+}
+
+#post.md-style-juejin #article-container figure.highlight .line.marked {
+  background: var(--md-code-line-marked);
+}
+
+#post.md-style-juejin #article-container figure.highlight tbody tr:hover td {
+  background: var(--md-code-line-hover);
+}
+
+#post.md-style-juejin #article-container figure.highlight .code-expand-btn {
+  margin: 0;
+  padding: 0.4rem 0;
+  border-top: 1px solid var(--md-code-border);
+  background: linear-gradient(180deg, var(--md-code-toolbar), var(--md-code-shell));
+  color: var(--md-code-toolbar-strong);
+  font-size: 0.8rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+#post.md-style-juejin #article-container figure.highlight .code-expand-btn:hover {
+  background: var(--md-hover-bg);
+  color: var(--md-main);
+}
+
+#post.md-style-juejin #article-container figure.highlight .code-expand-btn i {
+  padding: 0;
+  animation: none;
+}
+
+#post.md-style-juejin #article-container pre.ne-codeblock {
+  position: relative;
+  margin: 1.05rem 0;
+  padding: 2.22rem 1rem 0.98rem;
+  border: 1px solid var(--md-code-border);
+  border-radius: 10px;
+  background: var(--md-code-shell);
+  color: var(--md-code-text-strong);
+  box-shadow: 0 12px 26px rgba(30, 128, 255, 0.05);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+[data-theme="dark"] #post.md-style-juejin #article-container pre.ne-codeblock {
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+}
+
+#post.md-style-juejin #article-container pre.ne-codeblock::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2.02rem;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid var(--md-code-border);
+  background: linear-gradient(180deg, var(--md-code-toolbar), var(--md-code-shell));
+  color: var(--md-code-toolbar-strong);
+  content: attr(data-language);
+  display: flex;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+#post.md-style-juejin #article-container pre.ne-codeblock code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  color: inherit;
+  white-space: pre;
+}
+
+/* Added by AI: 取消代码块内部 pre/table 的二次外框，并恢复工具栏折叠行为 */
+#post.md-style-juejin #article-container figure.highlight > :is(table, pre),
+#post.md-style-juejin #article-container figure.highlight :is(.gutter pre, .code pre) {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-juejin #article-container figure.highlight :is(.gutter pre, .code pre) {
+  overflow: visible;
+}
+
+#post.md-style-juejin #article-container figure.highlight table {
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#post.md-style-juejin #article-container figure.highlight table td {
+  border: 0 !important;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools.closed {
+  border-bottom: 0;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools.closed ~ * {
+  display: none !important;
+}
+
+#post.md-style-juejin #article-container figure.highlight .highlight-tools.closed .expand {
+  transform: rotate(-90deg);
+}
+
+#post.md-style-juejin #article-container figure.highlight .code-expand-btn {
+  position: static;
+  bottom: auto;
+  z-index: auto;
+  width: 100%;
 }

@@ -655,11 +655,50 @@ html.lenis body {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow: auto !important;
 }
 
 .lenis.lenis-smooth iframe {
   pointer-events: none;
+}
+
+/* Added by AI: 评论控制按钮只在 owner 模式展示，避免普通状态下看得到但点击无效 */
+#button-group .site-item.owner-only {
+  display: none;
+}
+
+.is-owner-mode #button-group .site-item.owner-only {
+  display: inline-flex;
+}
+
+/* Added by AI: 评论区开关样式，兼容深浅色并避免隐藏后仍触发懒加载滚动异常 */
+.comments-hidden #post-comment,
+.comments-hidden #to_comment,
+.comments-hidden a[href$="#post-comment"] {
+  display: none !important;
+}
+
+#post-comment.comment-readonly .tk-submit,
+#post-comment.comment-readonly .tk-comments-title + .tk-submit,
+.comments-readonly #twikoo .tk-submit {
+  display: none !important;
+}
+
+#post-comment .ai-comment-notice {
+  margin: 0.75rem 0 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--icat-border-color);
+  border-radius: 8px;
+  background: var(--icat-secondbg);
+  color: var(--icat-fontcolor);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+[data-theme="dark"] #post-comment .ai-comment-notice {
+  border-color: var(--icat-card-border);
+  background: var(--icat-card-bg);
+  color: var(--icat-fontcolor);
 }
 
 @media screen and (max-width: 768px) {
